@@ -16,4 +16,9 @@ def add_book():
     if request.method == 'GET':
         return render_template('add_book.html', title = 'Add book')
     else:
-        return render_template('book_success.html', title = 'Added Book Successfully')
+        book_title = request.form.get('book_title')
+        return render_template(
+            'book_success.html', 
+            title = 'Added Book Successfully',
+            book_title = book_title
+        )
