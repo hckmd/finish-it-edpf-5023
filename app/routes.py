@@ -19,6 +19,20 @@ def add_book():
         return render_template('add_book.html', title = 'Add book')
     else:
         book_title = request.form.get('book_title')
+        status = request.form.get('status')
+        priority = request.form.get('priority')
+
+        # Create and add a book from the form
+        # For now, we'll just use the mandatory fields
+        # We'll use WTForms to create (and validate) these forms later
+        new_book = Book (
+            title = book_title,
+            status = status,
+            priority = priority
+        )
+        db.session.add(new_book)
+        db.session.commit()
+
         return render_template(
             'book_success.html', 
             title = 'Added Book Successfully',
