@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>{{ title }} - Finish it!</title>
+    </head>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            padding: 0.5em;
+            border-collapse: collapse;
+        }
+    </style>
+    <body>
+        <p>Finish it!</p>
+        <a href="index">Home</a>
+        <a href="#">By Tag</a>
+        <a href="books">Books</a>
+        <a href="#">Courses</a>
+        <a href="#">Tags</a>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>
