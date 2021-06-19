@@ -12,15 +12,17 @@
             </tr>
         </thead>
         <tbody>
+        {% for book in books %}
             <tr>
-                <td>Beyond Doctorates Downunder</td>
-                <td>Started</td>
-                <td>Medium</td>
+                <td>{{ book.title }}</td>
+                <td>{{ book.status }}</td>
+                <td>{{ book.priority }}</td>
                 <td>
                     <a href="#">Research</a>,
                     <a href="#">Career</a>
                 </td>
             </tr>
+        {% endfor %}
         </tbody>
     </table>
     <a href="add_book">Add another book</a>

@@ -1,6 +1,7 @@
 from flask import render_template, request
 
-from app import app
+from app import app, db
+from app.models import Book
 
 @app.route('/')
 @app.route('/index')
@@ -9,7 +10,8 @@ def index():
 
 @app.get('/books')
 def books_list():
-    return render_template('books_list.html', title = 'Books')
+    books = Book.query.all()
+    return render_template('books_list.html', title = 'Books', books = books)
 
 @app.route('/add_book', methods = ['GET','POST'])
 def add_book():

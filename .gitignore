@@ -115,3 +115,6 @@ dmypy.json
 
 # VS Code
 .vscode/
+
+# SQLite database
+app.db
