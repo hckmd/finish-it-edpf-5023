@@ -30,12 +30,20 @@ def init_database():
     db.drop_all()
     db.create_all()
 
+    # Add in some data to the tags table
+    research_tag = models.Tag(name = 'Research')
+    db.session.add(research_tag)
+    career_tag = models.Tag(name = 'Career')
+    db.session.add(career_tag)
+
     # Add in some data to the books table
     book1 = models.Book (
         title = 'Beyond Doctorates Downunder',
         status = 'Started',
         priority = 'Medium'
     )               
+    book1.tags.append(research_tag)
+    book1.tags.append(career_tag)
     db.session.add(book1)
 
     book2 = models.Book (
