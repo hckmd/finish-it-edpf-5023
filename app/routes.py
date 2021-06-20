@@ -13,6 +13,11 @@ def books_list():
     books = Book.query.all()
     return render_template('books_list.html', title = 'Books', books = books)
 
+@app.get('/books/<int:id>')
+def view_book(id):
+    book = Book.query.get_or_404(id)
+    return render_template('book_details.html', title = book.title, book = book)
+
 @app.route('/add_book', methods = ['GET','POST'])
 def add_book():
     if request.method == 'GET':
