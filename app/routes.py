@@ -3,7 +3,7 @@ from flask import render_template, request, redirect, url_for
 
 from app import app, db
 from app import status_options, priority_options
-from app.models import Book
+from app.models import Book, Tag
 
 @app.route('/')
 @app.route('/index')
@@ -79,3 +79,43 @@ def add_book():
             title = 'Added Book Successfully',
             book_title = book_title
         )
+
+@app.route('/books/<int:id>/tags', methods = ['GET', 'POST'])
+def edit_book_tags(id):
+    book = Book.query.get_or_404(id)
+    book_tag_ids = [tag.id for tag in book.tags]
+    tags = Tag.query.all()
+    print(book_tag_ids)
+    if request.method == 'POST':
+        selected_tag_ids = request.form.getlist('tag-checkboxes')
+        selected_tag_ids = [int(id) for id in selected_tag_ids]
+        print(selected_tag_ids)
+
+        # Variable to keep track of changes made, to know whether to write to the db
+        made_changes = False
+        for tag in tags:
+
+            # Check if any new tags need to be added to the book
+            if tag.id in selected_tag_ids and tag.id not in book_tag_ids:
+                book.tags.append(tag)
+                db.session.add(book)
+                made_changes = True
+
+            # Check if any tags have been unselected and remove them from the book
+            if tag.id in book_tag_ids and tag.id not in selected_tag_ids:
+                book.tags.remove(tag)
+                db.session.add(book)
+                made_changes = True
+        
+        # Changes have been made to the data, so we need to commit these
+        if made_changes:
+            db.session.commit()
+
+        return redirect(url_for('view_book', id = book.id))
+
+    return render_template('book_tags.html', 
+        book = book,
+        tags = tags,
+        book_tag_ids = book_tag_ids, 
+        title = 'Edit Book tags',
+    )
