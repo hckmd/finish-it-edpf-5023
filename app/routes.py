@@ -40,6 +40,15 @@ def edit_book(id):
         priority_options = priority_options
     )
 
+@app.get('/delete_book/<int:id>')
+def delete_book(id):
+    book = Book.query.get_or_404(id)
+    book_title = book.title
+    page_title = f'Deleted {book_title}'
+    db.session.delete(book)
+    db.session.commit()
+    return render_template('book_deleted.html', book_title = book_title, title = page_title)
+
 @app.route('/add_book', methods = ['GET','POST'])
 def add_book():
     if request.method == 'GET':
