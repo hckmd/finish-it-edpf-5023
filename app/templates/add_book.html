@@ -2,7 +2,7 @@
 
 {% block content %}
 <h1>Add Book</h1>
-<form action="{{ url_for('add_book')" method="post">
+<form action="{{ url_for('add_book')}}" method="post">
     <label for="book_title">Title:</label>
     <br>
     <input type="text" id="book_title" name="book_title">
@@ -16,19 +16,18 @@
     <label for="status">Status:</label>
     <br>
     <select id="status" name="status">
-        <option>Not Started</option>
-        <option>On Hold</option>
-        <option>Started</option>
-        <option>Completed</option>
+    {% for option in status_options %}
+        <option>{{ option }}</option>
+    {% endfor %}
     </select>
     <br>
 
     <label for="priority">Priority:</label>
     <br>
     <select id="priority" name="priority">
-        <option>Low</option>
-        <option>Medium</option>
-        <option>High</option>
+    {% for option in priority_options %}
+        <option> {{ option }}</option>
+    {% endfor %}
     </select>
     <br>
 

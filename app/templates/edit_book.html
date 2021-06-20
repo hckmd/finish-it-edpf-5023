@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Edit Book</h1>
+<form action="{{ url_for('edit_book', id = book.id) }}" method="post">
+    <label for="book_title">Title:</label>
+    <br>
+    <input type="text" id="book_title" name="book_title" value="{{ book.title }}">
+    <br>
+
+    <label for="authors">Authors:</label>
+    <br>
+    <input type="text" id="authors" name="authors" value="{{ book.authors }}">
+    <br>
+
+    <label for="status">Status:</label>
+    <br>
+    <select id="status" name="status">
+    {% for option in status_options %}
+        <option {% if option == book.status %} selected {% endif %}>
+            {{ option }}
+        </option>
+    {% endfor %}
+    </select>
+    <br>
+
+    <label for="priority">Priority:</label>
+    <br>
+    <select id="priority" name="priority">
+        {% for option in priority_options %}
+            <option {% if book.priority == option %} selected {% endif %}> 
+                {{ option }}
+            </option>
+        {% endfor %}
+    </select>
+    <br>
+
+    <label for="next_steps">Next steps:</label>
+    <br>
+    <textarea name="next_steps" cols="40" rows="5">{{ book.next_steps }}</textarea>
+    <br>
+
+    <label for="barriers">Barriers:</label>
+    <br>
+    <textarea name="barriers" cols="40" rows="5">{{ book.barriers }}</textarea>
+    <br>
+
+    <label for="notes">Notes:</label>
+    <br>
+    <textarea name="notes" cols="40" rows="5">{{ book.notes }}</textarea>
+    <br>
+
+    <hr>
+    <input type="submit" value="Save changes">
+</form>
+
+{% endblock %}

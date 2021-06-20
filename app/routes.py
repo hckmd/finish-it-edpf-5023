@@ -1,6 +1,8 @@
-from flask import render_template, request
+from os import stat
+from flask import render_template, request, redirect, url_for
 
 from app import app, db
+from app import status_options, priority_options
 from app.models import Book
 
 @app.route('/')
@@ -18,10 +20,35 @@ def view_book(id):
     book = Book.query.get_or_404(id)
     return render_template('book_details.html', title = book.title, book = book)
 
+@app.route('/books/<id>/edit', methods = ['POST', 'GET'])
+def edit_book(id):
+    book = Book.query.get_or_404(id)
+    page_title = f'Editing {book.title}'
+    if request.method == 'POST':
+        book.title = request.form.get('book_title')
+        book.status = request.form.get('status')
+        book.priority = request.form.get('priority')
+        db.session.add(book)
+        db.session.commit()
+        return redirect(url_for('view_book', id = book.id))
+
+    return render_template(
+        'edit_book.html', 
+        title = page_title, 
+        book = book,
+        status_options = status_options,
+        priority_options = priority_options
+    )
+
 @app.route('/add_book', methods = ['GET','POST'])
 def add_book():
     if request.method == 'GET':
-        return render_template('add_book.html', title = 'Add book')
+        return render_template(
+            'add_book.html', 
+            title = 'Add book',
+            status_options = status_options,
+            priority_options = priority_options
+        )
     else:
         book_title = request.form.get('book_title')
         status = request.form.get('status')

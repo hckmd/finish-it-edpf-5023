@@ -10,6 +10,8 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+status_options = ['Not Started', 'Started', 'Completed', 'On Hold']
+priority_options = ['Low', 'Medium', 'High']
 
 from app import routes, models
 
