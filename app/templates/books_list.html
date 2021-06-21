@@ -18,8 +18,9 @@
                 <td>{{ book.status }}</td>
                 <td>{{ book.priority }}</td>
                 <td>
-                    <a href="#">Research</a>,
-                    <a href="#">Career</a>
+                    {% for tag in book.tags %}
+                    <a href="#">{{ tag.name }}</a>,
+                    {% endfor %}
                 </td>
             </tr>
         {% endfor %}
