@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Success!</h1>
+
+<p>The tag <i>{{ tag_name }}</i> was deleted successfully.</p>
+
+<a href="{{ url_for('tags.index') }}">Return to list of tags</a>
+
+{% endblock %}

@@ -12,6 +12,7 @@
         {% for tag in tags %}
             <tr>
                 <td>{{ tag.name }}</td>
+                <td><a href="{{ url_for('tags.delete', id = tag.id) }}">Delete</a></td>
             </tr>
         {% endfor %}
         </tbody>
