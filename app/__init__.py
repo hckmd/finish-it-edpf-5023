@@ -9,6 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'this-is-a-secret' # Not for use in production, just a demo
 db = SQLAlchemy(app)
 status_options = ['Not Started', 'Started', 'Completed', 'On Hold']
 priority_options = ['Low', 'Medium', 'High']

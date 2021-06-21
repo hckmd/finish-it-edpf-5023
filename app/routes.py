@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, url_for
 from app import app, db
 from app import status_options, priority_options
 from app.models import Book, Tag
+from app.forms import BookEditForm
 
 @app.route('/')
 @app.route('/index')
@@ -23,11 +24,10 @@ def view_book(id):
 @app.route('/books/<id>/edit', methods = ['POST', 'GET'])
 def edit_book(id):
     book = Book.query.get_or_404(id)
+    form = BookEditForm(obj=book)
     page_title = f'Editing {book.title}'
-    if request.method == 'POST':
-        book.title = request.form.get('book_title')
-        book.status = request.form.get('status')
-        book.priority = request.form.get('priority')
+    if form.validate_on_submit():
+        form.populate_obj(book)
         db.session.add(book)
         db.session.commit()
         return redirect(url_for('view_book', id = book.id))
@@ -35,9 +35,7 @@ def edit_book(id):
     return render_template(
         'edit_book.html', 
         title = page_title, 
-        book = book,
-        status_options = status_options,
-        priority_options = priority_options
+        form = form
     )
 
 @app.get('/delete_book/<int:id>')
