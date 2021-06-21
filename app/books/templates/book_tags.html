@@ -22,6 +22,7 @@
     </table>
     <br>
     <input type="submit" value="Save changes"/>
+    <a href="{{ url_for('books.view', id = book.id )}}">Cancel</a>
 </form>
 {% endblock %}
 
