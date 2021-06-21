@@ -1,14 +1,24 @@
-from flask import render_template
+from flask import render_template, redirect, url_for
 
 from app import db
 from app.models import Tag
 from app.tags import bp
+from .forms import TagAddForm
 
-@bp.route('/')
-@bp.route('/index')
+@bp.route('/', methods = ['GET', 'POST'])
+@bp.route('/index', methods = ['GET', 'POST'])
 def index():
     tags = Tag.query.all()
-    return render_template('tags_list.html', title='Tags', tags=tags)
+    form = TagAddForm()
+    if form.validate_on_submit():
+        tag = Tag()
+        form.populate_obj(tag)
+        db.session.add(tag)
+        db.session.commit()
+
+        return redirect(url_for('tags.index'))
+
+    return render_template('tags_list.html', title='Tags', tags=tags, form=form)
 
 @bp.route('/delete/<int:id>')
 def delete(id):
