@@ -1,6 +1,5 @@
 import os
 
-import click
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
@@ -20,8 +19,12 @@ priority_options = ['Low', 'Medium', 'High']
 # Register the different blueprints (modules) in the app
 from app.books import bp as books_bp
 app.register_blueprint(books_bp, url_prefix='/books')
+
 from app.tags import bp as tags_bp
 app.register_blueprint(tags_bp, url_prefix='/tags')
+
+from app.courses import bp as courses_bp
+app.register_blueprint(courses_bp, url_prefix='/courses')
 
 from app import routes, models
 
@@ -62,6 +65,16 @@ def init_database():
         priority = 'High'
     )
     db.session.add(book2)
+
+    course1 = models.Course (
+        title = 'Certified Peer Reviewer Course',
+        status = 'Started',
+        priority = 'Medium',
+        url = 'https://researcheracademy.elsevier.com/navigating-peer-review/certified-peer-reviewer-course'
+    )
+    course1.tags.append(research_tag)
+    course1.tags.append(career_tag)
+    db.session.add(course1)
 
     db.session.commit()
 

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Courses</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td><a href="{{ url_for('courses.view', id = course.id) }}">{{ course.title }}</a></td>
+                <td>{{ course.status }}</td>
+                <td>{{ course.priority }}</td>
+                <td>
+                    {% for tag in course.tags %}
+                    <a href="#">{{ tag.name }}</a>,
+                    {% endfor %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('courses.add') }}">Add another book</a>
+{% endblock %}
+

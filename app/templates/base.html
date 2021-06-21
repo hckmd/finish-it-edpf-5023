@@ -14,7 +14,7 @@
         <a href="{{ url_for('index') }}">Home</a>
         <a href="#">By Tag</a>
         <a href="{{ url_for('books.index') }}">Books</a>
-        <a href="#">Courses</a>
+        <a href="{{ url_for('courses.index') }}">Courses</a>
         <a href="{{ url_for('tags.index') }}">Tags</a>
         <hr>
         {% block content %}{% endblock %}
