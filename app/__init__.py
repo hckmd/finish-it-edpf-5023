@@ -20,6 +20,8 @@ priority_options = ['Low', 'Medium', 'High']
 # Register the different blueprints (modules) in the app
 from app.books import bp as books_bp
 app.register_blueprint(books_bp, url_prefix='/books')
+from app.tags import bp as tags_bp
+app.register_blueprint(tags_bp, url_prefix='/tags')
 
 from app import routes, models
 
