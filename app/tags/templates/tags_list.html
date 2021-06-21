@@ -2,33 +2,52 @@
 
 {% block content %}
     <h1>Tags</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for tag in tags %}
-            <tr>
-                <td>{{ tag.name }}</td>
-                <td><a href="{{ url_for('tags.delete', id = tag.id) }}">Delete</a></td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <form name="edit_form" action="{{ url_for('tags.save', id = editing_tag_id) }}" method="post">
+        {{ edit_form.hidden_tag() }}
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for tag in tags %}
+                <tr>
+                    {% if tag.id == editing_tag_id %}
+                    <td>
+                        {{ edit_form.name(size=100) }}
+                        {% for error in add_form.name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                    </td>
+                    <td>{{ edit_form.submit }}</td>
+                    <td><a href="{{ url_for('tags.index') }}">Cancel</a></td>
+                    {% else %}
+                    <td>{{ tag.name }}</td>
+                    <td><a href="{{ url_for('tags.index', tag_id = tag.id) }}">Edit</a></td>
+                    <td><a href="{{ url_for('tags.delete', id = tag.id) }}">Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </form>
     <hr>
+    {% if editing == False %}
     <h2>Add tag</h2>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
+    <form name="add_form" action="" method="post">
+        {{ add_form.hidden_tag() }}
         <p>
-            {{ form.name.label }}</br>
-            {{ form.name(size=100) }}
-            {% for error in form.name.errors %}
+            {{ add_form.name.label }}</br>
+            {{ add_form.name(size=100) }}
+            {% for error in add_form.name.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </p>
-        <p>{{ form.submit }}</p>
+        <p>{{ add_form.submit }}</p>
     </form>
+    {% endif %}
 {% endblock %}
 
