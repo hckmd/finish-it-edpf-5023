@@ -41,9 +41,9 @@ def init_database():
     db.create_all()
 
     # Add in some data to the tags table
-    research_tag = models.Tag(name = 'Research')
+    research_tag = models.Tag(name = 'research')
     db.session.add(research_tag)
-    career_tag = models.Tag(name = 'Career')
+    career_tag = models.Tag(name = 'career')
     db.session.add(career_tag)
 
     # Add in some data to the books table
