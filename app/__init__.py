@@ -6,13 +6,20 @@ from flask_sqlalchemy import SQLAlchemy
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# Create the app and set up different configuration settings
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'this-is-a-secret' # Not for use in production, just a demo
+
+# Create the db and hard-coded values shared in different blueprints
 db = SQLAlchemy(app)
 status_options = ['Not Started', 'Started', 'Completed', 'On Hold']
 priority_options = ['Low', 'Medium', 'High']
+
+# Register the different blueprints (modules) in the app
+from app.books import bp as books_bp
+app.register_blueprint(books_bp, url_prefix='/books')
 
 from app import routes, models
 

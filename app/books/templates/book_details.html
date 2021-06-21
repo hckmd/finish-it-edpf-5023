@@ -17,9 +17,9 @@
 <li>{{ tag.name }}</li>
 {% endfor %}
 </ul>
-<a href="{{ url_for('edit_book_tags', id = book.id) }}">Edit tags</a>
+<a href="{{ url_for('books.edit_tags', id = book.id) }}">Edit tags</a>
 
 <hr>
-<a href="{{ url_for('edit_book', id = book.id) }}">Edit book</a>
-<a href="{{ url_for('delete_book', id = book.id) }}">Delete book</a>
+<a href="{{ url_for('books.edit', id = book.id) }}">Edit book</a>
+<a href="{{ url_for('books.delete', id = book.id) }}">Delete book</a>
 {% endblock %}

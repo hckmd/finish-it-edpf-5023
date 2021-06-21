@@ -14,7 +14,7 @@
         <tbody>
         {% for book in books %}
             <tr>
-                <td><a href="{{ url_for('view_book', id = book.id) }}">{{ book.title }}</a></td>
+                <td><a href="{{ url_for('books.view', id = book.id) }}">{{ book.title }}</a></td>
                 <td>{{ book.status }}</td>
                 <td>{{ book.priority }}</td>
                 <td>
@@ -26,6 +26,6 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('add_book') }}">Add another book</a>
+    <a href="{{ url_for('books.add') }}">Add another book</a>
 {% endblock %}
 
