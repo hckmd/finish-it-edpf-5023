@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for
 from app import app, db
 from app import status_options, priority_options
 from app.models import Book, Tag
-from app.forms import BookEditForm
+from app.forms import BookEditForm, BookAddForm
 
 @app.route('/')
 @app.route('/index')
@@ -49,35 +49,39 @@ def delete_book(id):
 
 @app.route('/add_book', methods = ['GET','POST'])
 def add_book():
-    if request.method == 'GET':
-        return render_template(
-            'add_book.html', 
-            title = 'Add book',
-            status_options = status_options,
-            priority_options = priority_options
-        )
-    else:
-        book_title = request.form.get('book_title')
-        status = request.form.get('status')
-        priority = request.form.get('priority')
+    form = BookAddForm()
+    if form.validate_on_submit():
+        book = Book()
+        print(form.tags.data)
 
-        # Create and add a book from the form
-        # For now, we'll just use the mandatory fields
-        # We'll use WTForms to create (and validate) these forms later
-        new_book = Book (
-            title = book_title,
-            status = status,
-            priority = priority
-        )
-        db.session.add(new_book)
+        # We'll map the fields across from the form to the database object
+        # Instead of using populate_obj, because there are some steps involved 
+        # in adding the book's tags
+        book.title = form.title.data
+        book.authors = form.authors.data
+        book.status = form.status.data
+        book.priority = form.priority.data
+        book.next_steps = form.next_steps.data
+        book.barriers = form.barriers.data
+        book.notes = form.notes.data
+
+        # Add the tags we need
+        selected_tag_ids = form.tags.data
+        for selected_tag_id in selected_tag_ids:
+            tag = Tag.query.get(selected_tag_id)
+            book.tags.append(tag)
+
+        db.session.add(book)
         db.session.commit()
-
+        
         return render_template(
             'book_success.html', 
             title = 'Added Book Successfully',
-            book_title = book_title
+            book_title = book.title
         )
-
+        
+    return render_template('add_book.html', title = 'Add book', form = form)
+    
 @app.route('/books/<int:id>/tags', methods = ['GET', 'POST'])
 def edit_book_tags(id):
     book = Book.query.get_or_404(id)

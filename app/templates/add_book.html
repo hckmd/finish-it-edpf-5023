@@ -2,52 +2,58 @@
 
 {% block content %}
 <h1>Add Book</h1>
-<form action="{{ url_for('add_book')}}" method="post">
-    <label for="book_title">Title:</label>
-    <br>
-    <input type="text" id="book_title" name="book_title">
-    <br>
-
-    <label for="authors">Authors:</label>
-    <br>
-    <input type="text" id="authors" name="authors">
-    <br>
-
-    <label for="status">Status:</label>
-    <br>
-    <select id="status" name="status">
-    {% for option in status_options %}
-        <option>{{ option }}</option>
-    {% endfor %}
-    </select>
-    <br>
-
-    <label for="priority">Priority:</label>
-    <br>
-    <select id="priority" name="priority">
-    {% for option in priority_options %}
-        <option> {{ option }}</option>
-    {% endfor %}
-    </select>
-    <br>
-
-    <label for="next_steps">Next steps:</label>
-    <br>
-    <textarea name="next_steps" cols="40" rows="5"></textarea>
-    <br>
-
-    <label for="barriers">Barriers:</label>
-    <br>
-    <textarea name="barriers" cols="40" rows="5"></textarea>
-    <br>
-
-    <label for="notes">Notes:</label>
-    <br>
-    <textarea name="notes" cols="40" rows="5"></textarea>
-    <br>
-
-    <hr>
-    <input type="submit" value="Add book">
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}</br>
+        {{ form.title(size=100) }}
+        {% for error in form.title.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.status.label }}</br>
+        {{ form.status() }}
+        {% for error in form.status.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.priority.label }}</br>
+        {{ form.priority() }}
+        {% for error in form.priority.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.next_steps.label }}</br>
+        {{ form.next_steps() }}
+        {% for error in form.next_steps.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.barriers.label }}</br>
+        {{ form.barriers() }}
+        {% for error in form.barriers.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.notes.label }}</br>
+        {{ form.notes() }}
+        {% for error in form.notes.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.tags.label }}</br>
+        {{ form.tags() }}
+        {% for error in form.tags.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit }}</p>
 </form>
 
 {% endblock %}
