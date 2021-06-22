@@ -35,10 +35,10 @@ def edit(id):
         form = form
     )
 
-@bp.route('/<int:id>')
+@bp.get('/<int:id>')
 def view(id):
-    # Temporarily redirect to edit page for the course, to be replaced later
-    return redirect(url_for('courses.edit', id=id))
+    course = Course.query.get_or_404(id)
+    return render_template('course_details.html', title = course.title, course = course)
 
 @bp.route('/add_course', methods = ['GET','POST'])
 def add():
