@@ -73,3 +73,12 @@ def add():
         )
         
     return render_template('add_course.html', title = 'Add course', form = form)
+
+@bp.route('/delete/<int:id>')
+def delete(id):
+    course = Course.query.get_or_404(id)
+    course_title = course.title
+    page_title = f'Deleted {course_title}'
+    db.session.delete(course)
+    db.session.commit()
+    return render_template('course_deleted.html', course_title = course_title, title = page_title)
