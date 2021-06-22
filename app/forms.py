@@ -1,9 +1,6 @@
 from wtforms import SelectMultipleField
 from wtforms import widgets
 
-from app import priority_options, status_options
-from app.models import Tag
-
 class MultiCheckboxField(SelectMultipleField):
     """
     A multiple-select, except displays a list of checkboxes.

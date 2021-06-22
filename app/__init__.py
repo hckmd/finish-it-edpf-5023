@@ -13,8 +13,8 @@ app.config['SECRET_KEY'] = 'this-is-a-secret' # Not for use in production, just 
 
 # Create the db and hard-coded values shared in different blueprints
 db = SQLAlchemy(app)
-status_options = ['Not Started', 'Started', 'Completed', 'On Hold']
-priority_options = ['Low', 'Medium', 'High']
+STATUS_OPTIONS = ['Not Started', 'Started', 'Completed', 'On Hold']
+PRIORITY_OPTIONS = ['Low', 'Medium', 'High']
 
 # Register the different blueprints (modules) in the app
 from app.books import bp as books_bp

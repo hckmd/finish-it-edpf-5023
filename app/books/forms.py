@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, TextAreaField
 from wtforms.validators import DataRequired, Length
 
-from app import priority_options, status_options
+from app import PRIORITY_OPTIONS, STATUS_OPTIONS
 from app.models import Tag
 from app.forms import MultiCheckboxField
 
@@ -10,8 +10,8 @@ class BookEditForm(FlaskForm):
     ''' Form for editing an existing book '''
     title = StringField('Title', validators=[DataRequired(), Length(max=100)])
     authors = StringField('Authors', validators=[Length(max=100)])
-    status = SelectField('Status', choices=status_options)
-    priority = SelectField('Priority', choices=priority_options)
+    status = SelectField('Status', choices=STATUS_OPTIONS)
+    priority = SelectField('Priority', choices=PRIORITY_OPTIONS)
     next_steps = TextAreaField('Next steps')
     barriers = TextAreaField('Barriers')
     notes = TextAreaField('Notes')
