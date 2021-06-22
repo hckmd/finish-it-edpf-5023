@@ -31,7 +31,7 @@ def edit(id):
     return render_template(
         'edit_course.html', 
         title = page_title, 
-        book_id = id,
+        course_id = id,
         form = form
     )
 

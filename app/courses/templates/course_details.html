@@ -4,7 +4,7 @@
 <h1>{{ course.title }}</h1>
 
 <h2>Details</h2>
-<p>URL: {{ course.url }}</p>
+<p>URL: <a href="{{ course.url }}">{{ course.url }}</a></p>
 <p>Status: {{ course.status }}</p>
 <p>Priority: {{ course.priority }}</p>
 <p>Next steps: {{ course.next_steps }}</p>
@@ -19,5 +19,5 @@
 </ul>
 
 <hr>
-<a href="{{ url_for('courses.edit', id = course.id) }}">Edit book</a>
+<a href="{{ url_for('courses.edit', id = course.id) }}">Edit course</a>
 {% endblock %}
