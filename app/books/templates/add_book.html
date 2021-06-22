@@ -12,6 +12,13 @@
         {% endfor %}
     </p>
     <p>
+        {{ form.authors.label }}</br>
+        {{ form.authors(size=200) }}
+        {% for error in form.authors.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
         {{ form.status.label }}</br>
         {{ form.status() }}
         {% for error in form.status.errors %}
