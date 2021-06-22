@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add Course</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}</br>
+        {{ form.title(size=100) }}
+        {% for error in form.title.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.url.label }}</br>
+        {{ form.url(size=200) }}
+        {% for error in form.url.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.status.label }}</br>
+        {{ form.status() }}
+        {% for error in form.status.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.priority.label }}</br>
+        {{ form.priority() }}
+        {% for error in form.priority.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.next_steps.label }}</br>
+        {{ form.next_steps() }}
+        {% for error in form.next_steps.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.barriers.label }}</br>
+        {{ form.barriers() }}
+        {% for error in form.barriers.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.notes.label }}</br>
+        {{ form.notes() }}
+        {% for error in form.notes.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.tags.label }}</br>
+        {{ form.tags() }}
+        {% for error in form.tags.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.submit }}
+        <a href="{{ url_for('courses.index') }}">Cancel</a>
+    </p>
+</form>
+
+{% endblock %}

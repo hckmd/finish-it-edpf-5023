@@ -4,6 +4,8 @@ from wtforms import validators
 from wtforms.validators import DataRequired, Length
 
 from app import PRIORITY_OPTIONS, STATUS_OPTIONS
+from app.forms import MultiCheckboxField
+from app.models import Tag
 
 class CourseEditForm(FlaskForm):
     ''' Form for editing an existing course '''
@@ -15,3 +17,14 @@ class CourseEditForm(FlaskForm):
     barriers = TextAreaField('Barriers')
     notes = TextAreaField('Notes')
     submit = SubmitField('Save changes')
+
+
+class CourseAddForm(CourseEditForm):
+    '''Form for creating a new course, including assigning tags'''
+
+    def __init__(self, *args, **kwargs):
+        super(CourseAddForm, self).__init__(*args, **kwargs)
+        self.tags.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
+
+    tags = MultiCheckboxField('Tags', coerce=int)
+    submit = SubmitField('Add course')
