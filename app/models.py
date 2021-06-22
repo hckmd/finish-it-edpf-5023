@@ -25,6 +25,33 @@ class Item(db.Model):
         'polymorphic_identity':'item'
     }
 
+    def update_tags(self, selected_tag_ids):
+
+        # Get all the tags in the system
+        all_tags = Tag.query.all()
+        current_tag_ids = [tag.id for tag in self.tags]
+        
+        # Variable to keep track of changes made, to know whether to write to the db
+        made_changes = False
+        for tag in all_tags:
+       
+            # Check if any new tags need to be added to the item
+            if tag.id in selected_tag_ids and tag.id not in current_tag_ids:
+                self.tags.append(tag)
+                db.session.add(self)
+                made_changes = True
+
+            # Check if any tags have been unselected and remove them from the item
+            if tag.id in current_tag_ids and tag.id not in selected_tag_ids:
+                self.tags.remove(tag)
+                db.session.add(self)
+                made_changes = True
+        
+        print(made_changes)
+        # Changes have been made to the data, so we need to commit these
+        if made_changes:
+            db.session.commit()
+
 class Book(Item):
     authors = db.Column(db.Text)
 

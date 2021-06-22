@@ -1,6 +1,5 @@
-from flask import render_template
+from flask import render_template, redirect, request
 from flask.helpers import url_for
-from werkzeug.utils import redirect
 
 from app import db
 from app.courses import bp
@@ -26,7 +25,7 @@ def edit(id):
         form.populate_obj(course)
         db.session.add(course)
         db.session.commit()
-        return redirect(url_for('courses.index'))
+        return redirect(url_for('courses.view', id = course.id))
 
     return render_template(
         'edit_course.html', 
@@ -82,3 +81,22 @@ def delete(id):
     db.session.delete(course)
     db.session.commit()
     return render_template('course_deleted.html', course_title = course_title, title = page_title)
+
+@bp.route('/<int:id>/tags', methods = ['GET', 'POST'])
+def edit_tags(id):
+    course = Course.query.get_or_404(id)
+    course_tag_ids = [tag.id for tag in course.tags]
+    tags = Tag.query.all()
+
+    if request.method == 'POST':
+        selected_tag_ids = request.form.getlist('tag-checkboxes')
+        selected_tag_ids = [int(id) for id in selected_tag_ids]
+        course.update_tags(selected_tag_ids)
+        return redirect(url_for('courses.view', id = course.id))
+
+    return render_template('course_tags.html', 
+        course = course,
+        tags = tags,
+        course_tag_ids = course_tag_ids, 
+        title = 'Edit Course tags',
+    )

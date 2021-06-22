@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{{ url_for('courses.edit_tags', id = course.id) }}" method="POST">
+    <table>
+        <thead>
+            <th>Tag</th>
+            <th></th>
+        </thead>
+        <tbody>
+        {% for tag in tags %}
+        <tr>
+            <td>{{ tag.name }}</td>
+            <td><input type="checkbox" 
+                {% if tag.id in course_tag_ids %} checked {% endif %}
+                name = 'tag-checkboxes'
+                value="{{ tag.id }}">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <input type="submit" value="Save changes"/>
+    <a href="{{ url_for('courses.view', id = course.id )}}">Cancel</a>
+</form>
+{% endblock %}
+
