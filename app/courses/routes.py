@@ -19,6 +19,6 @@ def index():
 def view(id):
     return 'Not implemented yet'
 
-@bp.route('/add_book')
+@bp.route('/add_course')
 def add():
     return 'Not implemented yet'
