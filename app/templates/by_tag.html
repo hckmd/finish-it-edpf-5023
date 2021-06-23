@@ -50,7 +50,8 @@
                 <td>{{ item.priority }}</td>
                 <td>
                     {% for tag in item.tags %}
-                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>,
+                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
+                        {{ tag.name }}</a>{% if not loop.last %},{% endif %}
                     {% endfor %}
                 </td>
             </tr>

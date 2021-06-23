@@ -48,6 +48,8 @@ def init_database():
     db.session.add(research_tag)
     career_tag = models.Tag(name = 'career')
     db.session.add(career_tag)
+    teaching_tag = models.Tag(name = 'teaching')
+    db.session.add(teaching_tag)
 
     # Add in some data to the books table
     book1 = models.Book (
@@ -64,6 +66,7 @@ def init_database():
         status = 'Started',
         priority = 'High'
     )
+    book2.tags.append(teaching_tag)
     db.session.add(book2)
 
     course1 = models.Course (
