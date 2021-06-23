@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>View by tags</h1>
+<p>
+    <form action="" method="get">
+        <span>Select tag to filter</span><br>
+        <select name="tag_id">
+            <option value="-">-</option>
+            {% for tag in all_tags %}
+            <option 
+                value="{{ tag.id }}"
+                {% if tag.id == selected_tag_id %} selected {% endif %}
+            >
+                {{ tag.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Filter by tag">
+    </form>
+    <a href="{{ url_for('view_by_tag')}}">View all tags</a>
+</p>
+<hr>
+{% for tag in selected_tags %}
+    <h2>{{ tag.name }}</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Status</th>
+                <th>Priority</th>
+                <th>Tags</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in tag.items %}
+            <tr>
+                <td>
+                    
+                    {% if item.type == 'book' %}
+                    <a href="{{ url_for('books.view', id = item.id) }}">{{ item.title }}</a>
+                    {% else %}
+                    <a href="{{ url_for('courses.view', id = item.id) }}">{{ item.title }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ item.type | capitalize }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.priority }}</td>
+                <td>
+                    {% for tag in item.tags %}
+                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>,
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endfor %}
+{% endblock %}
+
