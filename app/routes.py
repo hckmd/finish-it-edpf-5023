@@ -1,4 +1,6 @@
-from flask import render_template, request
+from flask import render_template, request, url_for
+from flask_login import current_user
+from werkzeug.utils import redirect
 
 from app import app
 from app.models import Item, Tag
@@ -6,8 +8,11 @@ from app.models import Item, Tag
 @app.route('/')
 @app.route('/index')
 def index():
-    items = Item.query.all()
-    return render_template('index.html', title = 'Home', items = items)
+    if current_user.is_authenticated:
+        items = Item.query.all()
+        return render_template('index.html', title = 'Home', items = items)
+    else:
+        return redirect(url_for('auth.login'))
 
 @app.route('/view_by_tag')
 def view_by_tag():
@@ -18,7 +23,7 @@ def view_by_tag():
     if 'tag_id' in request.args and request.args['tag_id'] != '-':
         tag_id = request.args['tag_id']
         selected_tag_id = int(tag_id)
-        selected_tags = Tag.query.filter_by(id=selected_tag_id)
+        selected_tags = Tag.query.filter_by(id = selected_tag_id)
     else:
         selected_tags = all_tags
     return render_template('by_tag.html', 
