@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, request
+from flask_login import login_required
 
 from app import db
 from app.models import Tag
@@ -7,6 +8,7 @@ from .forms import TagAddForm, TagEditForm
 
 @bp.route('/', methods = ['GET', 'POST'])
 @bp.route('/index', methods = ['GET', 'POST'])
+@login_required
 def index():
     editing = False
     edit_tag = None
@@ -37,6 +39,7 @@ def index():
     )
 
 @bp.route('/delete/<int:id>')
+@login_required
 def delete(id):
     to_delete = Tag.query.get_or_404(id)
     tag_name = to_delete.name
@@ -45,6 +48,7 @@ def delete(id):
     return render_template('tag_delete_success.html', title='Tag Deleted', tag_name=tag_name)
 
 @bp.post('/save/<int:id>')
+@login_required
 def save(id):
     edit_form = TagEditForm()
     add_form = TagAddForm()
