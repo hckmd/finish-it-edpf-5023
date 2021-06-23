@@ -1,5 +1,5 @@
-from flask import render_template, redirect, request
-from flask.helpers import url_for
+from flask import render_template, redirect, request, url_for
+from flask_login import login_required
 
 from app import db
 from app.courses import bp
@@ -8,6 +8,7 @@ from .forms import CourseEditForm, CourseAddForm
 
 @bp.route('/', methods = ['GET', 'POST'])
 @bp.route('/index', methods = ['GET', 'POST'])
+@login_required
 def index():
     courses = Course.query.all()
     return render_template (
@@ -16,7 +17,8 @@ def index():
         courses=courses
     )
 
-@bp.route('/edit/<int:id>', methods = ['GET','POST'])
+@bp.route('/<int:id>/edit', methods = ['GET','POST'])
+@login_required
 def edit(id):
     course = Course.query.get_or_404(id)
     form = CourseEditForm(obj=course)
@@ -35,11 +37,13 @@ def edit(id):
     )
 
 @bp.get('/<int:id>')
+@login_required
 def view(id):
     course = Course.query.get_or_404(id)
     return render_template('course_details.html', title = course.title, course = course)
 
 @bp.route('/add_course', methods = ['GET','POST'])
+@login_required
 def add():
     form = CourseAddForm()
     if form.validate_on_submit():
@@ -74,6 +78,7 @@ def add():
     return render_template('add_course.html', title = 'Add course', form = form)
 
 @bp.route('/delete/<int:id>')
+@login_required
 def delete(id):
     course = Course.query.get_or_404(id)
     course_title = course.title
@@ -83,6 +88,7 @@ def delete(id):
     return render_template('course_deleted.html', course_title = course_title, title = page_title)
 
 @bp.route('/<int:id>/tags', methods = ['GET', 'POST'])
+@login_required
 def edit_tags(id):
     course = Course.query.get_or_404(id)
     course_tag_ids = [tag.id for tag in course.tags]
