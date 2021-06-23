@@ -43,6 +43,13 @@ def init_database():
     db.drop_all()
     db.create_all()
 
+    # Create a sample user with email and password settings from .env
+    dan_user = models.User (username='dan')
+    env_email = os.environ.get('dan_email')
+    dan_user.email = env_email
+    env_password = os.environ.get('dan_password')
+    dan_user.set_password(env_password)
+
     # Add in some data to the tags table
     research_tag = models.Tag(name = 'research')
     db.session.add(research_tag)
@@ -78,6 +85,12 @@ def init_database():
     course1.tags.append(research_tag)
     course1.tags.append(career_tag)
     db.session.add(course1)
+
+    # Add the items (books and courses) to the example user
+    dan_user.items.append(book1)
+    dan_user.items.append(book2)
+    dan_user.items.append(course1)
+    db.session.add(dan_user)
 
     db.session.commit()
 

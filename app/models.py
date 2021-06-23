@@ -1,9 +1,25 @@
+from werkzeug.security import generate_password_hash, check_password_hash
+
 from app import db
 
 item_tags = db.Table('item_tag',
     db.Column('item_id', db.Integer, db.ForeignKey('item.id')),
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    username = db.Column(db.String(64), unique = True)
+    email = db.Column(db.String(120), unique = True)
+    password_hash = db.Column(db.String(128))
+    items = db.relationship('Item', backref='user')
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
 
 class Item(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -13,12 +29,14 @@ class Item(db.Model):
     next_steps = db.Column(db.Text)
     barriers = db.Column(db.Text)
     notes = db.Column(db.Text)
+    type = db.Column(db.String(20))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     tags = db.relationship(
         'Tag',
         secondary = item_tags,
         back_populates = 'items'
     )
-    type = db.Column(db.String(20))
+    
 
     __mapper_args__ = {
         'polymorphic_on':type,
