@@ -7,29 +7,32 @@
             <tr>
                 <th>Title</th>
                 <th>Type</th>
+                <th>Status</th>
                 <th>Priority</th>
                 <th>Tags</th>
             </tr>
         </thead>
         <tbody>
+            {% for item in items %}
             <tr>
-                <td>Beyond Doctorates Downunder</td>
-                <td>Book</td>
-                <td>Medium</td>
                 <td>
-                    <a href="#">Research</a>,
-                    <a href="#">Career</a>
+                    
+                    {% if item.type == 'book' %}
+                    <a href="{{ url_for('books.view', id = item.id) }}">{{ item.title }}</a>
+                    {% else %}
+                    <a href="{{ url_for('courses.view', id = item.id) }}">{{ item.title }}</a>
+                    {% endif %}
+                </td>
+                <td>{{ item.type | capitalize }}</td>
+                <td>{{ item.status }}</td>
+                <td>{{ item.priority }}</td>
+                <td>
+                    {% for tag in item.tags %}
+                    <a href="#">{{ tag.name }}</a>,
+                    {% endfor %}
                 </td>
             </tr>
-            <tr>
-                <td>Elsevier Peer Review Course</td>
-                <td>Course</td>
-                <td>Medium</td>
-                <td>
-                    <a href="#">Research</a>,
-                    <a href="#">Career</a>
-                </td>
-            </tr>
+            {% endfor %}
         </tbody>
     </table>
 {% endblock %}
