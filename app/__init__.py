@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -16,6 +17,9 @@ db = SQLAlchemy(app)
 STATUS_OPTIONS = ['Not Started', 'Started', 'Completed', 'On Hold']
 PRIORITY_OPTIONS = ['Low', 'Medium', 'High']
 
+# Set up flask-login for user authentication
+login = LoginManager(app)
+
 # Register the different blueprints (modules) in the app
 from app.books import bp as books_bp
 app.register_blueprint(books_bp, url_prefix='/books')
@@ -25,6 +29,9 @@ app.register_blueprint(tags_bp, url_prefix='/tags')
 
 from app.courses import bp as courses_bp
 app.register_blueprint(courses_bp, url_prefix='/courses')
+
+from app.auth import bp as auth_bp
+app.register_blueprint(auth_bp, url_prefix ='/auth')
 
 from app import routes, models
 
