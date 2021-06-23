@@ -1,4 +1,5 @@
 from flask import render_template, redirect, url_for, request
+from flask_login import login_required
 
 from app import db
 from app.models import Book, Tag
@@ -6,16 +7,19 @@ from app.books import bp
 from .forms import BookEditForm, BookAddForm
 
 @bp.get('/')
+@login_required
 def index():
     books = Book.query.all()
     return render_template('books_list.html', title = 'Books', books = books)
 
 @bp.get('/<int:id>')
+@login_required
 def view(id):
     book = Book.query.get_or_404(id)
     return render_template('book_details.html', title = book.title, book = book)
 
 @bp.route('/<id>/edit', methods = ['POST', 'GET'])
+@login_required
 def edit(id):
     book = Book.query.get_or_404(id)
     form = BookEditForm(obj=book)
@@ -34,6 +38,7 @@ def edit(id):
     )
 
 @bp.get('/delete/<int:id>')
+@login_required
 def delete(id):
     book = Book.query.get_or_404(id)
     book_title = book.title
@@ -43,6 +48,7 @@ def delete(id):
     return render_template('book_deleted.html', book_title = book_title, title = page_title)
 
 @bp.route('/add_book', methods = ['GET','POST'])
+@login_required
 def add():
     form = BookAddForm()
     if form.validate_on_submit():
@@ -78,6 +84,7 @@ def add():
     return render_template('add_book.html', title = 'Add book', form = form)
     
 @bp.route('/<int:id>/tags', methods = ['GET', 'POST'])
+@login_required
 def edit_tags(id):
     book = Book.query.get_or_404(id)
     book_tag_ids = [tag.id for tag in book.tags]
