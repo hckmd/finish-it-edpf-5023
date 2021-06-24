@@ -7,6 +7,7 @@ from app.books import bp
 from .forms import BookEditForm, BookAddForm
 
 @bp.get('/')
+@bp.get('/index')
 @login_required
 def index():
     books = Book.query.filter_by(user_id = current_user.id)
