@@ -1,6 +1,5 @@
-from flask import render_template, request, url_for, flash
+from flask import render_template, request, url_for, flash, redirect
 from flask_login import current_user
-from werkzeug.utils import redirect
 
 from app import app
 from app.models import Item, Tag
