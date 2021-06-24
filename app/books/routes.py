@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app import db
 from app.models import Book, Tag
@@ -9,19 +9,31 @@ from .forms import BookEditForm, BookAddForm
 @bp.get('/')
 @login_required
 def index():
-    books = Book.query.all()
+    books = Book.query.filter_by(user_id = current_user.id)
     return render_template('books_list.html', title = 'Books', books = books)
 
 @bp.get('/<int:id>')
 @login_required
 def view(id):
     book = Book.query.get_or_404(id)
+
+    # Check that the book belongs to the user currently logged in
+    # (unauthorised access)
+    if book.user_id != current_user.id:
+        return render_template('unauthorized.html'), 401
+
     return render_template('book_details.html', title = book.title, book = book)
 
 @bp.route('/<id>/edit', methods = ['POST', 'GET'])
 @login_required
 def edit(id):
     book = Book.query.get_or_404(id)
+
+    # Check that the book belongs to the user currently logged in
+    # (unauthorised access)
+    if book.user_id != current_user.id:
+        return render_template('unauthorized.html'), 401
+
     form = BookEditForm(obj=book)
     page_title = f'Editing {book.title}'
     if form.validate_on_submit():
@@ -41,6 +53,12 @@ def edit(id):
 @login_required
 def delete(id):
     book = Book.query.get_or_404(id)
+
+    # Check that the book belongs to the user currently logged in
+    # (unauthorised access)
+    if book.user_id != current_user.id:
+        return render_template('unauthorized.html'), 401
+        
     book_title = book.title
     page_title = f'Deleted {book_title}'
     db.session.delete(book)
@@ -53,7 +71,6 @@ def add():
     form = BookAddForm()
     if form.validate_on_submit():
         book = Book()
-        print(form.tags.data)
 
         # We'll map the fields across from the form to the database object
         # Instead of using populate_obj, because there are some steps involved 
@@ -65,6 +82,9 @@ def add():
         book.next_steps = form.next_steps.data
         book.barriers = form.barriers.data
         book.notes = form.notes.data
+
+        # Update the book with the user logged in
+        book.user_id = current_user.id
 
         # Add the tags we need
         selected_tag_ids = form.tags.data
@@ -87,9 +107,15 @@ def add():
 @login_required
 def edit_tags(id):
     book = Book.query.get_or_404(id)
+
+    # Check that the book belongs to the user currently logged in
+    # (unauthorised access)
+    if book.user_id != current_user.id:
+        return render_template('unauthorized.html'), 401
+    
     book_tag_ids = [tag.id for tag in book.tags]
     tags = Tag.query.all()
-    
+
     if request.method == 'POST':
         selected_tag_ids = request.form.getlist('tag-checkboxes')
         selected_tag_ids = [int(id) for id in selected_tag_ids]
