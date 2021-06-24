@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, request
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from app import db
 from app.models import Tag
@@ -19,14 +19,21 @@ def index():
     if 'tag_id' in request.args:
         editing_tag_id = int(request.args['tag_id'])
         edit_tag = Tag.query.get_or_404(editing_tag_id)
-        editing = True
-        edit_form = TagEditForm(obj=edit_tag)
-    tags = Tag.query.all()
+        # Check that the tag the user is editing is actually theirs
+        if edit_tag.user_id == current_user.id:
+            editing = True
+            edit_form = TagEditForm(obj=edit_tag)
+        else:
+            # The user is trying to edit someone else's tag,
+            # which is an unauthorised requesst
+            return render_template('unauthorized.html'), 401
+    tags = Tag.query.filter_by(user_id=current_user.id)
 
     if add_form.validate_on_submit():
         print('Running this add_form')
         tag = Tag()
         add_form.populate_obj(tag)
+        tag.user_id = current_user.id
         db.session.add(tag)
         db.session.commit()
 
@@ -42,9 +49,16 @@ def index():
 @login_required
 def delete(id):
     to_delete = Tag.query.get_or_404(id)
-    tag_name = to_delete.name
-    db.session.delete(to_delete)
-    db.session.commit()
+    # Check that the tag the user is deleting is actually theirs
+    if to_delete.user_id == current_user.id:
+        tag_name = to_delete.name
+        db.session.delete(to_delete)
+        db.session.commit()
+    else:
+        # The user is trying to delete someone else's tag,
+        # which is an unauthorised requesst
+        return render_template('unauthorized.html'), 401
+        
     return render_template('tag_delete_success.html', title='Tag Deleted', tag_name=tag_name)
 
 @bp.post('/save/<int:id>')
@@ -52,12 +66,19 @@ def delete(id):
 def save(id):
     edit_form = TagEditForm()
     add_form = TagAddForm()
-    tags = Tag.query.all()
+    tags = Tag.query.filter_by(user_id=current_user.id)
     if edit_form.validate_on_submit():
         tag = Tag.query.get_or_404(id)
-        edit_form.populate_obj(tag)
-        db.session.add(tag)
-        db.session.commit()
+        # Check that the tag the user is saving is actually theirs
+        if tag.user_id == current_user.id:
+            edit_form.populate_obj(tag)
+            db.session.add(tag)
+            db.session.commit()
+        else:
+            # The user is trying to edit someone else's tag,
+            # which is an unauthorised requesst
+            return render_template('unauthorized.html'), 401
+        
         return redirect(url_for('tags.index'))
 
     return render_template('tags_list.html', 
