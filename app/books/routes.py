@@ -114,7 +114,7 @@ def edit_tags(id):
         return render_template('unauthorized.html'), 401
     
     book_tag_ids = [tag.id for tag in book.tags]
-    tags = Tag.query.all()
+    tags = Tag.query.filter_by(user_id = current_user.id)
 
     if request.method == 'POST':
         selected_tag_ids = request.form.getlist('tag-checkboxes')
