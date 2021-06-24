@@ -1,9 +1,18 @@
-from flask import render_template, request, url_for
+from flask import render_template, request, url_for, flash
 from flask_login import current_user
 from werkzeug.utils import redirect
 
 from app import app
 from app.models import Item, Tag
+
+@app.errorhandler(401)
+def unauthorised(e):
+    if current_user.is_authenticated:
+        flash('You do not have access to this part of the app.')
+        return render_template('')
+    else:
+        flash('Please login to access the app.')
+        return(redirect(url_for('auth.login')))
 
 @app.route('/')
 @app.route('/index')
