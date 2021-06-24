@@ -84,7 +84,7 @@ def init_database():
     # Add tag to the sample admin user
     admin_user.tags.append(admin_tag)
 
-    # Add in some data to the books table
+    # Sample data for the dan user
     book1 = models.Book (
         title = 'Beyond Doctorates Downunder',
         status = 'Started',
@@ -112,13 +112,33 @@ def init_database():
     course1.tags.append(career_tag)
     db.session.add(course1)
 
+    # Sample data for the admin user
+
+    book3 = models.Book (
+        title = 'Administration for Dummies',
+        status = 'Started',
+        priority = 'High',
+    )
+    book3.tags.append(admin_tag)
+    db.session.add(book3)
+
+    course2 = models.Course (
+        title = 'Administration 101',
+        status ='Not Started',
+        priority = 'Medium'
+    )
+    course2.tags.append(admin_tag)
+    db.session.add(book3)
+
     # Add the items (books and courses) to the example user
     dan_user.items.append(book1)
     dan_user.items.append(book2)
     dan_user.items.append(course1)
     db.session.add(dan_user)
 
-    # Add the admin user to the session
+    # Add the admin user and their items to the session
+    admin_user.items.append(book3)
+    admin_user.items.append(course2)
     db.session.add(admin_user)
 
     db.session.commit()

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, SelectField, TextAreaField
-from wtforms import validators
 from wtforms.validators import DataRequired, Length
+from flask_login import current_user
 
 from app import PRIORITY_OPTIONS, STATUS_OPTIONS
 from app.forms import MultiCheckboxField
@@ -24,7 +24,7 @@ class CourseAddForm(CourseEditForm):
 
     def __init__(self, *args, **kwargs):
         super(CourseAddForm, self).__init__(*args, **kwargs)
-        self.tags.choices = [(tag.id, tag.name) for tag in Tag.query.all()]
+        self.tags.choices = [(tag.id, tag.name) for tag in Tag.query.filter_by(user_id=current_user.id)]
 
     tags = MultiCheckboxField('Tags', coerce=int)
     submit = SubmitField('Add course')
