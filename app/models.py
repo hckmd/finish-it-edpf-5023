@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True)
     password_hash = db.Column(db.String(128))
     items = db.relationship('Item', backref='user')
+    is_administrator = db.Column(db.Boolean)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

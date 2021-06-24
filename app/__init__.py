@@ -50,12 +50,21 @@ def init_database():
     db.drop_all()
     db.create_all()
 
-    # Create a sample user with email and password settings from .env
+    # Create a sample (non-admin) user with email and password settings from .env
     dan_user = models.User (username='dan')
-    env_email = os.environ.get('dan_email')
-    dan_user.email = env_email
-    env_password = os.environ.get('dan_password')
-    dan_user.set_password(env_password)
+    dan_email = os.environ.get('dan_email')
+    dan_user.email = dan_email
+    dan_password = os.environ.get('dan_password')
+    dan_user.set_password(dan_password)
+    dan_user.is_administrator = False
+
+    # Create a sample admin user as well
+    admin_user = models.User (username='admin')
+    admin_email = os.environ.get('admin_email')
+    admin_user.email = admin_email
+    admin_password = os.environ.get('admin_password')
+    admin_user.set_password(admin_password)
+    admin_user.is_administrator = True
 
     # Add in some data to the tags table
     research_tag = models.Tag(name = 'research')
@@ -98,6 +107,9 @@ def init_database():
     dan_user.items.append(book2)
     dan_user.items.append(course1)
     db.session.add(dan_user)
+
+    # Add the admin user to the session
+    db.session.add(admin_user)
 
     db.session.commit()
 
