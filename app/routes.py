@@ -8,7 +8,7 @@ from app.models import Item, Tag
 def unauthorised(e):
     if current_user.is_authenticated:
         flash('You do not have access to this part of the app.')
-        return render_template('')
+        render_template('unauthorized.html')
     else:
         flash('Please login to access the app.')
         return(redirect(url_for('auth.login')))
