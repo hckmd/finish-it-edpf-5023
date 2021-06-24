@@ -22,6 +22,10 @@
         |
         <a href="{{ url_for('auth.logout') }}">Logout</a>
         {% endif %}
+        {% if current_user.is_administrator %}
+        |
+        <a href="{{ url_for('admin.index') }}">Users</a>
+        {% endif %}
         <hr>
         {% with messages = get_flashed_messages() %}
         {% if messages %}
