@@ -14,6 +14,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique = True)
     password_hash = db.Column(db.String(128))
     items = db.relationship('Item', backref='user')
+    tags = db.relationship('Tag', backref='user')
     is_administrator = db.Column(db.Boolean)
 
     def set_password(self, password):
@@ -93,6 +94,7 @@ class Course(Item):
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(100), unique=True, nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     items = db.relationship(
         'Item',
         secondary = item_tags,

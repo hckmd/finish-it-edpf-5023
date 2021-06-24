@@ -73,6 +73,16 @@ def init_database():
     db.session.add(career_tag)
     teaching_tag = models.Tag(name = 'teaching')
     db.session.add(teaching_tag)
+    admin_tag = models.Tag(name = 'administration')
+    db.session.add(admin_tag)
+
+    # Add tags to the sample non-admin user
+    dan_user.tags.append(research_tag)
+    dan_user.tags.append(career_tag)
+    dan_user.tags.append(teaching_tag)
+
+    # Add tag to the sample admin user
+    admin_user.tags.append(admin_tag)
 
     # Add in some data to the books table
     book1 = models.Book (
