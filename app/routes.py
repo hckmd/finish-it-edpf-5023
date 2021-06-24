@@ -17,7 +17,7 @@ def unauthorised(e):
 @app.route('/index')
 def index():
     if current_user.is_authenticated:
-        items = Item.query.all()
+        items = Item.query.filter_by(user_id = current_user.id)
         return render_template('index.html', title = 'Home', items = items)
     else:
         return redirect(url_for('auth.login'))
@@ -25,14 +25,14 @@ def index():
 @app.route('/view_by_tag')
 @login_required
 def view_by_tag():
-    all_tags = Tag.query.all()
+    all_tags = Tag.query.filter_by(user_id = current_user.id)
     selected_tags = None
     selected_tag_id = 0
     # Check if the tag id is a placeholder, when no tag has been selected
     if 'tag_id' in request.args and request.args['tag_id'] != '-':
         tag_id = request.args['tag_id']
         selected_tag_id = int(tag_id)
-        selected_tags = Tag.query.filter_by(id = selected_tag_id)
+        selected_tags = Tag.query.filter_by(id = selected_tag_id, user_id = current_user.id)
     else:
         selected_tags = all_tags
     return render_template('by_tag.html', 
