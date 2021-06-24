@@ -1,5 +1,5 @@
 from flask import render_template, request, url_for, flash, redirect
-from flask_login import current_user
+from flask_login import current_user, login_required
 
 from app import app
 from app.models import Item, Tag
@@ -23,6 +23,7 @@ def index():
         return redirect(url_for('auth.login'))
 
 @app.route('/view_by_tag')
+@login_required
 def view_by_tag():
     all_tags = Tag.query.all()
     selected_tags = None
