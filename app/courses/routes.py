@@ -6,8 +6,8 @@ from app.courses import bp
 from app.models import Course, Tag
 from .forms import CourseEditForm, CourseAddForm
 
-@bp.route('/', methods = ['GET', 'POST'])
-@bp.route('/index', methods = ['GET', 'POST'])
+@bp.route('/')
+@bp.route('/index')
 @login_required
 def index():
     courses = Course.query.filter_by(user_id = current_user.id)
