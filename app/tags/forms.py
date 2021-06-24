@@ -13,15 +13,17 @@ class TagEditForm(FlaskForm):
 
     def validate_name(form, field):
         if field.raw_data:
-            # Make all tag names lowercase for simplicity of keeping them unique
+            # Make all tag names lowercase and remove trailing & leading whitespace
+            # for simplicity of keeping them unique
             field.data = field.data.lower()
+            field.data = field.data.strip()
 
             # Check if tag already exists and whether it's not the one being saved
             existing_tag = Tag.query.filter_by(name=field.data).first()
             if existing_tag:
                 # If the tag already exists, but it's not this one
                 # get the user to save as a different name to avoid duplication
-                if existing_tag.id != id:
+                if existing_tag.id != form.id.data:
                     raise ValidationError('Tag name must be unique')
         else:
             raise ValidationError('Tag name cannot be blank')
@@ -33,8 +35,10 @@ class TagAddForm(FlaskForm):
 
     def validate_name(form, field):
         if field.raw_data:
-            # Make all tag names lowercase for simplicity of keeping them unique
+            # Make all tag names lowercase and remove trailing & leading whitespace
+            # for simplicity of keeping them unique
             field.data = field.data.lower()
+            field.data = field.data.strip()
 
             # Check if the tag already exists - if so, it shouldn't be added
             existing_tag = Tag.query.filter_by(name=field.data).first()
