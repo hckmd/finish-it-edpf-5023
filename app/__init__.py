@@ -33,6 +33,9 @@ app.register_blueprint(courses_bp, url_prefix='/courses')
 from app.auth import bp as auth_bp
 app.register_blueprint(auth_bp, url_prefix ='/auth')
 
+from app.admin import bp as admin_bp
+app.register_blueprint(admin_bp, url_prefix ='/admin')
+
 from app import routes, models
 
 # Command line functions for setting up a database
