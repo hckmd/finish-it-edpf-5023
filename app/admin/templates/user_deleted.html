@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Deleted user</h1>
+<p>Successfully deleted <i>{{ username }}</i></p>
+<hr>
+<a href="{{ url_for('admin.index') }}">Back to users list</a>
+{% endblock %}

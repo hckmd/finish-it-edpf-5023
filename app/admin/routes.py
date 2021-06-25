@@ -35,3 +35,15 @@ def add_user():
         return redirect(url_for('admin.index'))
 
     return render_template('add_user.html', title = 'Add User', form = form)
+
+@bp.route('/delete/<int:id>')
+@login_required
+@admin_required
+def delete_user(id):
+    user = User.query.get_or_404(id)
+        
+    username = user.username
+    page_title = f'Deleted {username}'
+    db.session.delete(user)
+    db.session.commit()
+    return render_template('user_deleted.html', username = username, title = page_title)
