@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, IntegerField
 from wtforms.validators import DataRequired, Length, ValidationError
 from wtforms.widgets import HiddenInput
+from flask_login import current_user
 
 from app.models import Tag
 
@@ -19,7 +20,7 @@ class TagEditForm(FlaskForm):
             field.data = field.data.strip()
 
             # Check if tag already exists and whether it's not the one being saved
-            existing_tag = Tag.query.filter_by(name=field.data).first()
+            existing_tag = Tag.query.filter_by(name = field.data, user_id = current_user.id).first()
             if existing_tag:
                 # If the tag already exists, but it's not this one
                 # get the user to save as a different name to avoid duplication
@@ -41,7 +42,7 @@ class TagAddForm(FlaskForm):
             field.data = field.data.strip()
 
             # Check if the tag already exists - if so, it shouldn't be added
-            existing_tag = Tag.query.filter_by(name=field.data).first()
+            existing_tag = Tag.query.filter_by(name = field.data, user_id = current_user.id).first()
             if existing_tag:
                 raise ValidationError('Tag name must be unique')
         else:
