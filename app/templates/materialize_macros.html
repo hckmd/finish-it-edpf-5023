@@ -1,0 +1,27 @@
+{% macro materialize_text_input(field) %}
+    {{ field.label }}  
+    {% if field.errors %}
+        {% set css_class = 'validate invalid ' + kwargs.pop('class', '') %}
+        {{ field(class=css_class, **kwargs) }}
+        {% for error in field.errors %}
+            <span class="helper-text" data-error="{{ error }}"></span>
+        {% endfor %}
+    {% else %}
+        {% set css_class = 'validate ' + kwargs.pop('class', '') %}
+        {{ field(class=css_class, **kwargs) }}
+    {% endif %} 
+{% endmacro %}
+
+{% macro materialize_textarea(field) %}
+    {{ field.label }}  
+    {% if field.errors %}
+        {% set css_class = 'materialize-textarea validate invalid ' + kwargs.pop('class', '') %}
+        {{ field(class=css_class, **kwargs) }}
+        {% for error in field.errors %}
+            <span class="helper-text" data-error="{{ error }}"></span>
+        {% endfor %}
+    {% else %}
+        {% set css_class = 'materialize-textarea validate ' + kwargs.pop('class', '') %}
+        {{ field(class=css_class, **kwargs) }}
+    {% endif %} 
+{% endmacro %}

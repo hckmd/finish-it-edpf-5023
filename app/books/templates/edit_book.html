@@ -1,3 +1,5 @@
+{% from 'materialize_macros.html' import materialize_text_input, materialize_textarea %}
+
 {% extends "base.html" %}
 
 {% block content %}
@@ -8,74 +10,41 @@
         {{ form.hidden_tag() }}
         <div class="row">
             <div class="input-field col s6">
-                {{ form.title.label }}</br>
-                {{ form.title(size=100) }}
-                {% for error in form.title.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{  materialize_text_input(form.title) }}
             </div>
             <div class="input-field col s6">
-                {{ form.authors.label }}</br>
-                {{ form.authors(size=200) }}
-                {% for error in form.authors.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{  materialize_text_input(form.authors) }}
             </div>
         </div>
         <div class="row">
             <div class="input-field col s6">
                 {{ form.status.label }}</br>
                 {{ form.status() }}
-                {% for error in form.status.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
             </div>
             <div class="input-field col s6">
                 {{ form.priority.label }}</br>
                 {{ form.priority() }}
-                {% for error in form.priority.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                {{ form.next_steps.label }}</br>
-                {{ form.next_steps(class_="materialize-textarea") }}
-                {% for error in form.next_steps.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{ materialize_textarea(form.next_steps) }}
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                {{ form.barriers.label }}</br>
-                {{ form.barriers(class_="materialize-textarea") }}
-                {% for error in form.barriers.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{ materialize_textarea(form.barriers) }}
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
-                {{ form.notes.label }}</br>
-                {{ form.notes(class_="materialize-textarea") }}
-                {% for error in form.notes.errors %}
-                <span style="color: red;">[{{ error }}]</span>
-                {% endfor %}
+                {{ materialize_textarea(form.notes) }}
             </div>
         </div>
-
-    </p>
-    <p>
-        
-    </p>
-    <p>
         <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
         <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.view', id = book_id )}}">
             Cancel
         </a>
     </p>
 </form>
-
 {% endblock %}
