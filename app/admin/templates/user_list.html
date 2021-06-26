@@ -25,6 +25,7 @@
                 No
                 {% endif %}
             </td>
+            <td><a href="{{ url_for('admin.change_password', user_id = user.id) }}">Change password</a></td>
             <td>
                 <a href="{{ url_for('admin.delete_user', id = user.id) }}">Delete</a>
             </td>

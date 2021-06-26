@@ -5,7 +5,7 @@ from app import db
 from app.models import User
 from app.admin import bp
 from .decorators import admin_required
-from .forms import UserAddForm, UserEditDetailsForm
+from .forms import UserAddForm, UserEditDetailsForm, UserChangePasswordForm
 
 @bp.get('/')
 @bp.get('/index')
@@ -74,3 +74,25 @@ def delete_user(id):
     db.session.delete(user)
     db.session.commit()
     return render_template('user_deleted.html', username = username, title = page_title)
+
+@bp.route('/change_password/<int:user_id>', methods = ['GET', 'POST'])
+@login_required
+@admin_required
+def change_password(user_id):
+    user = User.query.get_or_404(user_id)
+    form = UserChangePasswordForm(obj=user)
+    page_title = f'Changing password for {user.username}'
+    if form.validate_on_submit():
+
+        # This view just changes password of a user
+        # Changing user details is in a separate view
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        return redirect(url_for('admin.index'))
+
+    return render_template(
+        'change_password.html', 
+        title = page_title, 
+        form = form
+    )

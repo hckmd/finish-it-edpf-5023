@@ -44,3 +44,7 @@ class UserEditDetailsForm(FlaskForm):
         if user != None and user.id != form.id.data:
             raise ValidationError('Email address must be unique.') 
     
+class UserChangePasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired(), EqualTo('password_confirm', message='Passwords must match')])
+    password_confirm = PasswordField('Confirm password:', validators=[DataRequired()])
+    submit = SubmitField('Change password')
