@@ -25,3 +25,17 @@
         {{ field(class=css_class, **kwargs) }}
     {% endif %} 
 {% endmacro %}
+
+{% macro materialize_checkboxes(field) %}
+<span class="tag-heading">{{ field.label.text | safe }}</span>
+    {% for subfield in field %}
+    <div class="row">
+        <div class="input-field col s12">
+            <label>
+                {{ subfield(class="filled-in") | safe}} 
+                <span>{{ subfield.label.text | safe }}</span>
+            </label>
+        </div>
+    </div>
+    {% endfor %}
+{% endmacro %}
