@@ -1,62 +1,80 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Edit Book</h1>
-<form action="" method="post"  novalidate>
+<p class="page-heading">Edit Book</p>
+<div class="row">
+    <div class="col s12">
+        <form action="" method="post"  novalidate>
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form.title.label }}</br>
+                {{ form.title(size=100) }}
+                {% for error in form.title.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="input-field col s6">
+                {{ form.authors.label }}</br>
+                {{ form.authors(size=200) }}
+                {% for error in form.authors.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s6">
+                {{ form.status.label }}</br>
+                {{ form.status() }}
+                {% for error in form.status.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="input-field col s6">
+                {{ form.priority.label }}</br>
+                {{ form.priority() }}
+                {% for error in form.priority.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.next_steps.label }}</br>
+                {{ form.next_steps(class_="materialize-textarea") }}
+                {% for error in form.next_steps.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.barriers.label }}</br>
+                {{ form.barriers(class_="materialize-textarea") }}
+                {% for error in form.barriers.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                {{ form.notes.label }}</br>
+                {{ form.notes(class_="materialize-textarea") }}
+                {% for error in form.notes.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
 
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.title.label }}</br>
-        {{ form.title(size=100) }}
-        {% for error in form.title.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
     </p>
     <p>
-        {{ form.authors.label }}</br>
-        {{ form.authors(size=200) }}
-        {% for error in form.authors.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
+        
     </p>
     <p>
-        {{ form.status.label }}</br>
-        {{ form.status() }}
-        {% for error in form.status.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.priority.label }}</br>
-        {{ form.priority() }}
-        {% for error in form.priority.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.next_steps.label }}</br>
-        {{ form.next_steps() }}
-        {% for error in form.next_steps.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.barriers.label }}</br>
-        {{ form.barriers() }}
-        {% for error in form.barriers.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.notes.label }}</br>
-        {{ form.notes() }}
-        {% for error in form.notes.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.submit }}
-        <a href="{{ url_for('books.view', id = book_id )}}">Cancel</a>
+        <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
+        <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.view', id = book_id )}}">
+            Cancel
+        </a>
     </p>
 </form>
 
