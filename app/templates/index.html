@@ -1,40 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Stuff to finish</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Tags</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in items %}
-            <tr>
-                <td>
-                    
-                    {% if item.type == 'book' %}
-                    <a href="{{ url_for('books.view', id = item.id) }}">{{ item.title }}</a>
-                    {% else %}
-                    <a href="{{ url_for('courses.view', id = item.id) }}">{{ item.title }}</a>
-                    {% endif %}
-                </td>
-                <td>{{ item.type | capitalize }}</td>
-                <td>{{ item.status }}</td>
-                <td>{{ item.priority }}</td>
-                <td>
-                    {% for tag in item.tags %}
+<p class="page-heading">Stuff to finish</p>
+<table class="highlight">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Tags</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in items %}
+        <tr>
+            <td>
+                {% if item.type == 'book' %}
+                <a href="{{ url_for('books.view', id = item.id) }}">{{ item.title }}</a>
+                {% else %}
+                <a href="{{ url_for('courses.view', id = item.id) }}">{{ item.title }}</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if item.type == 'book' %}
+                <i class="material-icons item-type-icon">book</i>
+                {% else %}
+                <i class="material-icons item-type-icon">laptop</i>
+                {% endif %}
+            </td>
+            <td>{{ item.status }}</td>
+            <td>
+                {% if item.priority == 'High' %}
+                <div class="chip red lighten-4">High</div>
+                {% elif item.priority == 'Medium' %}
+                <div class="chip orange lighten-4">Medium</div>
+                {% else %}
+                <div class="chip green lighten-4">Low</div>
+                {% endif %}
+            </td>
+            <td>
+                {% for tag in item.tags %}
+                <div class="chip">
                     <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
-                        {{ tag.name }}</a>{% if not loop.last %},{% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+                        {{ tag.name }}</a>
+                </div>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
 
