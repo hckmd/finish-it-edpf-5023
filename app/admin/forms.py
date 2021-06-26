@@ -10,7 +10,7 @@ class UserAddForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Length(max=120)])
     password = PasswordField('Password', validators=[DataRequired(), EqualTo('password_confirm', message='Passwords must match')])
     password_confirm = PasswordField('Confirm password:', validators=[DataRequired()])
-    is_administrator = BooleanField()
+    is_administrator = BooleanField('Is administrator?')
     submit = SubmitField('Add user')
 
     def validate_username(form, field):

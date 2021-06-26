@@ -19,6 +19,10 @@
         {% endfor %}
     </p>
     <p>
+        {{ form.is_administrator.label }}</br>
+        {{ form.is_administrator() }}
+    </p>
+    <p>
         {{ form.password.label }}</br>
         {{ form.password(size=32) }}
         {% for error in form.password.errors %}
