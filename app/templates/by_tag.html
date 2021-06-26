@@ -1,30 +1,28 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>View by tags</h1>
-<p>
-    <form action="" method="get">
-        <span>Select tag to filter</span><br>
-        <select name="tag_id">
+<p class="page-heading">View by tags</p>
+<form action="" method="get">
+    <div class="input-field">
+        <select id="filter_tag" name="tag_id">
             <option value="-">-</option>
             {% for tag in all_tags %}
-            <option 
-                value="{{ tag.id }}"
-                {% if tag.id == selected_tag_id %} selected {% endif %}
-            >
+            <option value="{{ tag.id }}" {% if tag.id == selected_tag_id %} selected {% endif %}>
                 {{ tag.name }}
             </option>
             {% endfor %}
         </select>
-        <br>
-        <input type="submit" value="Filter by tag">
-    </form>
-    <a href="{{ url_for('view_by_tag')}}">View all tags</a>
-</p>
-<hr>
+        <label for="filter_tag">Select tag</label>
+    </div>
+    <button class="waves-effect waves-light btn blue darken-2" type="submit">Filter by tag</button>
+    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('view_by_tag')}}">View all</a>
+</form>
+
 {% for tag in selected_tags %}
-    <h2>{{ tag.name }}</h2>
-    <table>
+<div class="section">
+    <div class="divider"></div>
+    <p class="tag-heading">{{ tag.name }}</p>
+    <table class="highlight">
         <thead>
             <tr>
                 <th>Title</th>
@@ -45,19 +43,36 @@
                     <a href="{{ url_for('courses.view', id = item.id) }}">{{ item.title }}</a>
                     {% endif %}
                 </td>
-                <td>{{ item.type | capitalize }}</td>
+                <td>
+                    {% if item.type == 'book' %}
+                    <i class="material-icons item-type-icon">book</i>
+                    {% else %}
+                    <i class="material-icons item-type-icon">laptop</i>
+                    {% endif %}
+                </td>
                 <td>{{ item.status }}</td>
-                <td>{{ item.priority }}</td>
+                <td>
+                    {% if item.priority == 'High' %}
+                    <div class="chip red lighten-4">High</div>
+                    {% elif item.priority == 'Medium' %}
+                    <div class="chip orange lighten-4">Medium</div>
+                    {% else %}
+                    <div class="chip green lighten-4">Low</div>
+                    {% endif %}
+                </td>
                 <td>
                     {% for tag in item.tags %}
-                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
-                        {{ tag.name }}</a>{% if not loop.last %},{% endif %}
+                    <div class="chip">
+                        <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
+                            {{ tag.name }}</a>
+                    </div>
                     {% endfor %}
                 </td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-    {% endfor %}
+</div>
+{% endfor %}
 {% endblock %}
 
