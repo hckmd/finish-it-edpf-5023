@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Books</h1>
+<div class="row">
+    <p class="page-heading">Books</p>
     <table>
         <thead>
             <tr>
@@ -16,17 +17,32 @@
             <tr>
                 <td><a href="{{ url_for('books.view', id = book.id) }}">{{ book.title }}</a></td>
                 <td>{{ book.status }}</td>
-                <td>{{ book.priority }}</td>
+                <td>
+                    {% if book.priority == 'High' %}
+                    <div class="chip red lighten-4">High</div>
+                    {% elif book.priority == 'Medium' %}
+                    <div class="chip orange lighten-4">Medium</div>
+                    {% else %}
+                    <div class="chip green lighten-4">Low</div>
+                    {% endif %}
+                </td>
                 <td>
                     {% for tag in book.tags %}
-                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
-                        {{ tag.name }}</a>{% if not loop.last %},{% endif %}
+                    <div class="chip">
+                        <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
+                            {{ tag.name }}</a>
+                    </div>
                     {% endfor %}
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ url_for('books.add') }}">Add another book</a>
+</div>
+<div class="row">
+    <a class="waves-effect waves-light btn green lighten-1" href="{{ url_for('books.add') }}">
+        <i class="material-icons left">add</i>Add a book
+    </a>
+</div>
 {% endblock %}
 
