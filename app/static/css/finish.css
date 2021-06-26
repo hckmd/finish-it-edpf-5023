@@ -10,6 +10,15 @@
     font-size: 2rem;
 }
 
+.section-heading {
+    font-size: 1.5rem;
+}
+
 .tag-heading {
     font-size: 1.5rem;
+}
+
+.field-label {
+    font-weight: 600;
+    font-size: 1.1rem;
 }

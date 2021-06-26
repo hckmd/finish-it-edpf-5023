@@ -1,25 +1,69 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ book.title }}</h1>
+<p class="page-heading">{{ book.title }}</p>
+<p class="section-heading">Details</p>
 
-<h2>Details</h2>
-<p>Authors: {{ book.authors }}</p>
-<p>Status: {{ book.status }}</p>
-<p>Priority: {{ book.priority }}</p>
-<p>Next steps: {{ book.next_steps }}</p>
-<p>Barriers: {{ book.barriers }}</p>
-<p>Notes: {{ book.notes }}</p>
+<div class="row">
+    <div class="col s4">
+        <span class="field-label">Authors</span>
+        <p>{{ book.authors }}</p>
+    </div>
+    <div class="col s4">
+        <span class="field-label">Status</span>
+        <p>{{ book.status }}</p>
+    </div>
+    <div class="col s4">
+        <span class="field-label">Priority</span>
+        <p>
+            {% if book.priority == 'High' %}
+            <div class="chip red lighten-4">High</div>
+            {% elif book.priority == 'Medium' %}
+            <div class="chip orange lighten-4">Medium</div>
+            {% else %}
+            <div class="chip green lighten-4">Low</div>
+            {% endif %}
+        </p>
+    </div>
+<div class="row">
+    <div class="col s6">
+        <span class="field-label">Next steps</span>
+        {% if book.next_steps %}
+        <p>{{ book.next_steps }}</p>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <span class="field-label">Barriers</span>
+        {% if book.barriers %}
+        <p>{{ book.barriers }}</p>
+        {% endif %}
+    </div>
+</div>
+<div class="row">
+    <div class="col s12">
+        <span class="field-label">Notes</span>
+        {% if book.notes %}
+        <p>{{ book.notes }}</p>
+        {% endif %}
+    </div>
+</div>
 
-<h2>Tags</h2>
-<ul>
+<p class="section-heading">Tags</p>
 {% for tag in book.tags %}
-<li>{{ tag.name }}</li>
+<div class="chip">
+    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>
+</div>
 {% endfor %}
-</ul>
-<a href="{{ url_for('books.edit_tags', id = book.id) }}">Edit tags</a>
-
-<hr>
-<a href="{{ url_for('books.edit', id = book.id) }}">Edit book</a>
-<a href="{{ url_for('books.delete', id = book.id) }}">Delete book</a>
+<div class="divider"></div>
+<div class="section">
+    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.edit', id = book.id) }}">
+        Edit book
+    </a>
+    <a class="waves-effect waves-light btn blue-grey" href="{{ url_for('books.edit_tags', id = book.id) }}">
+        Edit tags
+    </a>
+    <a class="waves-effect waves-light btn red lighten-2" href="{{ url_for('books.delete', id = book.id) }}">
+        Delete book
+    </a>
+</div>
 {% endblock %}
