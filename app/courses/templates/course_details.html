@@ -1,24 +1,78 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ course.title }}</h1>
+<p class="page-heading">{{ course.title }}</p>
+<p class="section-heading">Details</p>
 
-<h2>Details</h2>
-<p>URL: <a href="{{ course.url }}">{{ course.url }}</a></p>
-<p>Status: {{ course.status }}</p>
-<p>Priority: {{ course.priority }}</p>
-<p>Next steps: {{ course.next_steps }}</p>
-<p>Barriers: {{ course.barriers }}</p>
-<p>Notes: {{ course.notes }}</p>
-
-<h2>Tags</h2>
-<ul>
-{% for tag in course.tags %}
-    <li>{{ tag.name }}</li>
-{% endfor %}
-</ul>
-<a href="{{ url_for('courses.edit_tags', id = course.id) }}">Edit tags</a>
-<hr>
-<a href="{{ url_for('courses.edit', id = course.id) }}">Edit course</a>
-<a href="{{ url_for('courses.delete', id = course.id) }}">Delete course</a>
+<div class="row details-section">
+    <div class="col s4">
+        <span class="field-label">URL</span>
+        <p>
+            <a href="{{ course.url }}">{{ course.url }}</a>
+        </p>
+    </div>
+    <div class="col s4">
+        <span class="field-label">Status</span>
+        <p>{{ course.status }}</p>
+    </div>
+    <div class="col s4">
+        <span class="field-label">Priority</span>
+        <p>
+            {% if course.priority == 'High' %}
+            <div class="chip red lighten-4">High</div>
+            {% elif course.priority == 'Medium' %}
+            <div class="chip orange lighten-4">Medium</div>
+            {% else %}
+            <div class="chip green lighten-4">Low</div>
+            {% endif %}
+        </p>
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row details-section">
+    <div class="col s6">
+        <span class="field-label">Next steps</span>
+        {% if course.next_steps %}
+        <p>{{ course.next_steps }}</p>
+        {% else %}
+        <span></span>
+        {% endif %}
+    </div>
+    <div class="col s6">
+        <span class="field-label">Barriers</span>
+        {% if course.barriers %}
+        <p>{{ course.barriers }}</p>
+        {% endif %}
+    </div>
+</div>
+<div class="divider"></div>
+<div class="row details-section">
+    <div class="col s12">
+        <span class="field-label">Notes</span>
+        {% if course.notes %}
+        <p>{{ course.notes }}</p>
+        {% endif %}
+    </div>
+</div>
+<div class="divider"></div>
+<p class="section-heading">Tags</p>
+<p>
+    {% for tag in course.tags %}
+    <div class="chip">
+        <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>
+    </div>
+    {% endfor %}
+</p>
+<div class="divider"></div>
+<div class="section">
+    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.edit', id = course.id) }}">
+        Edit course
+    </a>
+    <a class="waves-effect waves-light btn blue-grey" href="{{ url_for('courses.edit_tags', id = course.id) }}">
+        Edit tags
+    </a>
+    <a class="waves-effect waves-light btn red lighten-2" href="{{ url_for('courses.delete', id = course.id) }}">
+        Delete course
+    </a>
+</div>
 {% endblock %}
