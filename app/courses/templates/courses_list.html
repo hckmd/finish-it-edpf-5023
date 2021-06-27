@@ -1,32 +1,48 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Courses</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Tags</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for course in courses %}
-            <tr>
-                <td><a href="{{ url_for('courses.view', id = course.id) }}">{{ course.title }}</a></td>
-                <td>{{ course.status }}</td>
-                <td>{{ course.priority }}</td>
-                <td>
-                    {% for tag in course.tags %}
-                    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
-                        {{ tag.name }}</a>{% if not loop.last %},{% endif %}
-                    {% endfor %}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ url_for('courses.add') }}">Add another course</a>
+    <div class="row">
+        <p class="page-heading">Courses</p>
+        <table class="highlight">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Tags</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for course in courses %}
+                <tr>
+                    <td><a href="{{ url_for('courses.view', id = course.id) }}">{{ course.title }}</a></td>
+                    <td>{{ course.status }}</td>
+                    <td>
+                        {% if course.priority == 'High' %}
+                        <div class="chip red lighten-4">High</div>
+                        {% elif course.priority == 'Medium' %}
+                        <div class="chip orange lighten-4">Medium</div>
+                        {% else %}
+                        <div class="chip green lighten-4">Low</div>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% for tag in course.tags %}
+                        <div class="chip">
+                            <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">
+                                {{ tag.name }}</a>
+                        </div>
+                        {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <a class="waves-effect waves-light btn green lighten-1" href="{{ url_for('courses.add') }}">
+            <i class="material-icons left">add</i>Add a course
+        </a>
+    </div>
 {% endblock %}
 
