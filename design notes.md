@@ -27,6 +27,8 @@ For now, priorities and statuses of the different items will be hardcoded, rathe
 
 Each user will be able to create and modify their own tags, these won't be system-wide tags.
 
+To simplify deletion of users, deletion of users will only be able to be done when they have no tags or items (books or courses) attached to them. This will be checked through the app, rather than the database level. Trying to delete users without this check will error because of foreign key constraints.
+
 ### Gold plating
 
 Some features and functionality that would be nice to include but that are low priority are listed below:

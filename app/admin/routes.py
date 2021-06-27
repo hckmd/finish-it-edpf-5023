@@ -1,4 +1,4 @@
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, flash
 from flask_login import login_required
 
 from app import db
@@ -62,18 +62,54 @@ def edit_user(id):
         form = form
     )
 
+def format_delete_message(username, type, multiple):
+    '''Helper function for formatting messages on deletion'''
+    message = ''
+    if multiple:
+        message = f'{username} has {type}s in the system. Please delete these before deleting the user.'
+    else:
+        message = f'{username} has a {type} in the system. Please delete this before deleting the user.'
+    return message
 
 @bp.route('/delete/<int:id>')
 @login_required
 @admin_required
 def delete_user(id):
     user = User.query.get_or_404(id)
-        
     username = user.username
-    page_title = f'Deleted {username}'
-    db.session.delete(user)
-    db.session.commit()
-    return render_template('user_deleted.html', username = username, title = page_title)
+    to_delete = True
+    
+    # Check if the user has items or tags
+    # Prevent deletion if they have any of these
+    # User will have to delete all of these before deleting the user
+    if len(user.items) > 0:
+        to_delete = False
+
+        # Check if the user has books in the system
+        books = [item for item in user.items if item.type == 'book']
+        if len(books) > 0:
+            message = format_delete_message(username, 'book', len(books) == 1)
+            flash(message, 'error')
+
+        # Check if the user has courses in the system
+        courses = [item for item in user.items if item.type == 'course']
+        if len(courses) > 0:
+            message = format_delete_message(username, 'course', len(courses) == 1)
+            flash(message, 'error')
+
+    if len(user.tags) > 0:
+        to_delete = False
+        message = format_delete_message(username, 'tag', len(user.tags) == 1)
+        flash(message, 'error')
+
+    page_title = f'Deleting {username}'
+    if to_delete:
+        page_title = f'Deleted {username}'
+        db.session.delete(user)
+        db.session.commit()
+        return render_template('user_deleted.html', username = username, title = page_title)
+
+    return redirect(url_for('admin.index'))
 
 @bp.route('/change_password/<int:user_id>', methods = ['GET', 'POST'])
 @login_required
