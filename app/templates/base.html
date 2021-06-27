@@ -34,15 +34,21 @@
             {% endwith %}
         </ul>
         <div id="content" class="container">
-            {% with messages = get_flashed_messages() %}
+            {% with messages = get_flashed_messages(with_categories=True) %}
             {% if messages %}
             <div class="row message-box">
                 <div class="col s12">
                     <div class="card grey lighten-4">
-                        <div class="card-content">
-                            <i class="material-icons">info</i>                            
-                            {% for message in messages %}
-                            <p>{{ message }}</p>
+                        <div class="card-content">                   
+                            {% for category, message in messages %}
+                            <p class="valign-wrapper">
+                                {% if category == 'error' %}
+                                <i class="material-icons message-icon">warning_amber</i>
+                                {% else %}
+                                <i class="material-icons message-icon">info_outline</i>
+                                {% endif %}
+                                {{ message }}
+                            </p>
                             {% endfor %}
                         </div>
                     </div>

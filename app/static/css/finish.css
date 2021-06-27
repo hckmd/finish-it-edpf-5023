@@ -38,3 +38,8 @@
 .message-box {
     margin-top: 2rem;
 }
+
+.message-icon {
+    margin-right: 0.25rem;
+    color: #616161;
+}
