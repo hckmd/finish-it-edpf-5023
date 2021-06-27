@@ -10,7 +10,7 @@
             {{ form.hidden_tag() }}
             <div class="row">
                 <div class="input-field col s6">
-                    {{  materialize_text_input(form.title) }}
+                    {{  materialize_text_input(form.title, required = True) }}
                 </div>
                 <div class="input-field col s6">
                     {{  materialize_text_input(form.authors) }}
@@ -18,12 +18,12 @@
             </div>
             <div class="row">
                 <div class="input-field col s6">
-                    {{ form.status.label }}</br>
                     {{ form.status() }}
+                    <label>{{ form.status.label.text | safe }} *</label>
                 </div>
                 <div class="input-field col s6">
-                    {{ form.priority.label }}</br>
                     {{ form.priority() }}
+                    <label>{{ form.priority.label.text | safe }} *</label>         
                 </div>
             </div>
             <div class="row">
