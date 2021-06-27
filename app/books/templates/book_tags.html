@@ -25,11 +25,13 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
-    <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
-    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.view', id = book.id )}}">
-        Cancel
-    </a>
-</form>
+        <p>
+            <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
+            <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.view', id = book.id )}}">
+                Cancel
+            </a>
+        </p>
+    </form>
+</div>
 {% endblock %}
 
