@@ -34,13 +34,15 @@
         {% if book.next_steps %}
         <p>{{ book.next_steps }}</p>
         {% else %}
-        <span></span>
+        <p></p>
         {% endif %}
     </div>
     <div class="col s6">
         <span class="field-label">Barriers</span>
         {% if book.barriers %}
         <p>{{ book.barriers }}</p>
+        {% else %}
+        <p></p>
         {% endif %}
     </div>
 </div>
@@ -50,6 +52,8 @@
         <span class="field-label">Notes</span>
         {% if book.notes %}
         <p>{{ book.notes }}</p>
+        {% else %}
+        <p></p>
         {% endif %}
     </div>
 </div>

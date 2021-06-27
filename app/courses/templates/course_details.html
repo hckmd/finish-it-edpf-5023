@@ -35,12 +35,16 @@
         <span class="field-label">Next steps</span>
         {% if course.next_steps %}
         <p>{{ course.next_steps }}</p>
+        {% else %}
+        <p></p>
         {% endif %}
     </div>
     <div class="col s6">
         <span class="field-label">Barriers</span>
         {% if course.barriers %}
         <p>{{ course.barriers }}</p>
+        {% else %}
+        <p></p>
         {% endif %}
     </div>
 </div>
@@ -50,6 +54,8 @@
         <span class="field-label">Notes</span>
         {% if course.notes %}
         <p>{{ course.notes }}</p>
+        {% else %}
+        <p></p>
         {% endif %}
     </div>
 </div>
