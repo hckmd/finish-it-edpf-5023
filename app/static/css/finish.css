@@ -30,3 +30,11 @@
 .details-section {
     margin-top: 1rem;
 }
+
+.add-tag-section {
+    margin-top: 1rem;
+    background-color: #eeeeee;
+    border: solid .1rem #b1b1b1;
+    border-radius: 1rem;
+    padding: 1rem;
+}
