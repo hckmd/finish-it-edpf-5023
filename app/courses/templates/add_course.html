@@ -1,69 +1,54 @@
+{% from 'materialize_macros.html' import materialize_text_input, materialize_textarea, materialize_checkboxes %}
+
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Add Course</h1>
-<form action="" method="post">
-    {{ form.hidden_tag() }}
-    <p>
-        {{ form.title.label }}</br>
-        {{ form.title(size=100) }}
-        {% for error in form.title.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.url.label }}</br>
-        {{ form.url(size=200) }}
-        {% for error in form.url.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.status.label }}</br>
-        {{ form.status() }}
-        {% for error in form.status.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.priority.label }}</br>
-        {{ form.priority() }}
-        {% for error in form.priority.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.next_steps.label }}</br>
-        {{ form.next_steps() }}
-        {% for error in form.next_steps.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.barriers.label }}</br>
-        {{ form.barriers() }}
-        {% for error in form.barriers.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.notes.label }}</br>
-        {{ form.notes() }}
-        {% for error in form.notes.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.tags.label }}</br>
-        {{ form.tags() }}
-        {% for error in form.tags.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-    </p>
-    <p>
-        {{ form.submit }}
-        <a href="{{ url_for('courses.index') }}">Cancel</a>
-    </p>
-</form>
-
+<p class="page-heading">Add Course</p>
+<div class="row">
+    <div class="col s12">
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <div class="row">
+                <div class="input-field col s6">
+                    {{  materialize_text_input(form.title) }}
+                </div>
+                <div class="input-field col s6">
+                    {{  materialize_text_input(form.url) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ form.status.label }}</br>
+                    {{ form.status() }}
+                </div>
+                <div class="input-field col s6">
+                    {{ form.priority.label }}</br>
+                    {{ form.priority() }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    {{ materialize_textarea(form.next_steps) }}
+                </div>
+                <div class="input-field col s6">
+                    {{ materialize_textarea(form.barriers) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    {{ materialize_textarea(form.notes) }}
+                </div>
+            </div>
+            <div class="row">
+                {{ materialize_checkboxes(form.tags) }}
+            </div>
+            <div class="row">
+                <button class="waves-effect waves-light btn green lighten-1" type="submit">Add course</button>
+                <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.index')}}">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
 {% endblock %}
