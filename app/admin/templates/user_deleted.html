@@ -2,8 +2,10 @@
 {% set active_menu_item = 'Users' %}
 
 {% block content %}
-<h1>Deleted user</h1>
-<p>Successfully deleted <i>{{ username }}</i></p>
-<hr>
+<div class="section">
+    <p class="page-heading">Deleted user</p>
+    <p>Successfully deleted <i>{{ username }}</i></p>
+</div>
+<div class="divider"></div>
 <a href="{{ url_for('admin.index') }}">Back to users list</a>
 {% endblock %}
