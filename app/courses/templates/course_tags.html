@@ -4,36 +4,34 @@
 {% block content %}
 <p class="page-heading">{{ course.title }}</p>
 <p class="section-heading">Editing tags</p>
-<div class="row">
-    <form action="{{ url_for('courses.edit_tags', id = course.id) }}" method="POST">
-        <table>
-            <thead>
-                <th>Tag</th>
-                <th></th>
-            </thead>
-            <tbody>
-                {% for tag in tags %}
-                <tr>
-                    <td>
-                        <label>
-                            <input type="checkbox" 
-                            {% if tag.id in course_tag_ids %} checked {% endif %}
-                            name = 'tag-checkboxes' class="filled-in"
-                            value="{{ tag.id }}">
-                            <span>{{ tag.name }}</span>
-                        </label>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <p>
-            <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
-            <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.view', id = course.id )}}">
-                Cancel
-            </a>
-        </p>
-    </form>
-</div>
+<form action="{{ url_for('courses.edit_tags', id = course.id) }}" method="POST">
+    <table>
+        <thead>
+            <th>Tag</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for tag in tags %}
+            <tr>
+                <td>
+                    <label>
+                        <input type="checkbox" 
+                        {% if tag.id in course_tag_ids %} checked {% endif %}
+                        name = 'tag-checkboxes' class="filled-in"
+                        value="{{ tag.id }}">
+                        <span>{{ tag.name }}</span>
+                    </label>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p>
+        <button class="waves-effect waves-light btn green lighten-1" type="submit">Save changes</button>
+        <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.view', id = course.id )}}">
+            Cancel
+        </a>
+    </p>
+</form>
 {% endblock %}
 

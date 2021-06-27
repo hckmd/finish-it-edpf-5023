@@ -6,51 +6,48 @@
 
 {% block content %}
 <p class="page-heading">Add Course</p>
-<div class="row">
-    <div class="col s12">
-        <form action="" method="post" novalidate>
-            {{ form.hidden_tag() }}
-            <div class="row">
-                <div class="input-field col s6">
-                    {{  materialize_text_input(form.title, required = True) }}
-                </div>
-                <div class="input-field col s6">
-                    {{  materialize_text_input(form.url) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">             
-                    {{ form.status() }}
-                    <label>{{ form.status.label.text | safe }} *</label>
-                </div>
-                <div class="input-field col s6">
-                    {{ form.priority() }}
-                    <label>{{ form.priority.label.text | safe }} *</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ materialize_textarea(form.next_steps) }}
-                </div>
-                <div class="input-field col s6">
-                    {{ materialize_textarea(form.barriers) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    {{ materialize_textarea(form.notes) }}
-                </div>
-            </div>
-            <div class="row">
-                {{ materialize_checkboxes(form.tags) }}
-            </div>
-            <div class="row">
-                <button class="waves-effect waves-light btn green lighten-1" type="submit">Add course</button>
-                <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.index')}}">
-                    Cancel
-                </a>
-            </div>
-        </form>
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="input-field col s6">
+            {{  materialize_text_input(form.title, required = True) }}
+        </div>
+        <div class="input-field col s6">
+            {{  materialize_text_input(form.url) }}
+        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="input-field col s6">             
+            {{ form.status() }}
+            <label>{{ form.status.label.text | safe }} *</label>
+        </div>
+        <div class="input-field col s6">
+            {{ form.priority() }}
+            <label>{{ form.priority.label.text | safe }} *</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s6">
+            {{ materialize_textarea(form.next_steps) }}
+        </div>
+        <div class="input-field col s6">
+            {{ materialize_textarea(form.barriers) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            {{ materialize_textarea(form.notes) }}
+        </div>
+    </div>
+    <div class="row">
+        {{ materialize_checkboxes(form.tags) }}
+    </div>
+    <div class="row">
+        <button class="waves-effect waves-light btn green lighten-1" type="submit">Add course</button>
+        <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('courses.index')}}">
+            Cancel
+        </a>
+    </div>
+</form>
+
 {% endblock %}
