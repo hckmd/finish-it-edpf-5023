@@ -5,7 +5,9 @@
 <li {% if active_menu_item == 'By_Tag' %} class="active" {% endif %}>
     <a href="{{ url_for('view_by_tag') }}">By Tag</a>
 </li>
-<li><a href="{{ url_for('books.index') }}">Books</a></li>
+<li {% if active_menu_item == 'Books' %} class="active" {% endif %}>
+    <a href="{{ url_for('books.index') }}">Books</a>
+</li>
 <li><a href="{{ url_for('courses.index') }}">Courses</a></li>
 <li><a href="{{ url_for('tags.index') }}">Tags</a></li>
 {% endif %}
