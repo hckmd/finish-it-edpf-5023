@@ -5,42 +5,39 @@
 
 {% block content %}
 <p class="page-heading">Add User</p>
-<div class="row">
-    <div class="col s12">
-        <form action="" method="post">
-            {{ form.hidden_tag() }}
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ materialize_text_input(form.username, required = True) }}
-                </div>
-                <div class="input-field col s6">
-                    {{ materialize_text_input(form.email, required = True) }}
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <label>
-                        {{ form.is_administrator(class="filled-in") | safe}} 
-                        <span>{{ form.is_administrator.label.text | safe }}</span>
-                    </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s6">
-                    {{ materialize_text_input(form.password, required = True) }}
-                </div>
-                <div class="input-field col s6">
-                    {{ materialize_text_input(form.password_confirm, required = True) }}
-                </div>
-            </div>
-            <div class="row">
-                <button class="waves-effect waves-light btn green lighten-1" type="submit">Add user</button>
-                <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('admin.index')}}">
-                    Cancel
-                </a>
-            </div>
-        </form>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <div class="row">
+        <div class="input-field col s6">
+            {{ materialize_text_input(form.username, required = True) }}
+        </div>
+        <div class="input-field col s6">
+            {{ materialize_text_input(form.email, required = True) }}
+        </div>
     </div>
-</div>
-
+    <div class="row">
+        <div class="input-field col s6">
+            {{ materialize_text_input(form.password, required = True) }}
+        </div>
+        <div class="input-field col s6">
+            {{ materialize_text_input(form.password_confirm, required = True) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <p>
+                <label>
+                    {{ form.is_administrator(class="filled-in") | safe}} 
+                    <span>{{ form.is_administrator.label.text | safe }}</span>
+                </label>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <button class="waves-effect waves-light btn green lighten-1" type="submit">Add user</button>
+        <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('admin.index')}}">
+            Cancel
+        </a>
+    </div>
+</form>
 {% endblock %}
