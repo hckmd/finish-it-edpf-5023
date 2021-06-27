@@ -8,8 +8,12 @@
 <li {% if active_menu_item == 'Books' %} class="active" {% endif %}>
     <a href="{{ url_for('books.index') }}">Books</a>
 </li>
-<li><a href="{{ url_for('courses.index') }}">Courses</a></li>
-<li><a href="{{ url_for('tags.index') }}">Tags</a></li>
+<li {% if active_menu_item == 'Courses' %} class="active" {% endif %}>
+    <a href="{{ url_for('courses.index') }}">Courses</a>
+</li>
+<li {% if active_menu_item == 'Tags' %} class="active" {% endif %}>
+    <a href="{{ url_for('tags.index') }}">Tags</a>
+</li>
 {% endif %}
 {% if user.is_anonymous %}
 <li><a href="{{ url_for('auth.login') }}">Login</a></li>
