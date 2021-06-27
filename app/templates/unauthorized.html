@@ -1,7 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Unauthorised</h1>
-<p>You do not have access to this part of the app.</p>
-<a href="{{ url_for('index') }}">Return to home page</a>
+<div class="section">
+    <p class="page-heading">Unauthorised</p>
+    <p>You do not have access to this part of the app.</p>
+</div>
+<div class="divider"></div>
+<p>
+    <a href="{{ url_for('index') }}">Return to home page</a>
+</p>
 {% endblock %}
