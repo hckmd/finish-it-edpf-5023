@@ -36,11 +36,18 @@
         <div id="content" class="container">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-            <ul>
-                {% for message in messages %}
-                <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
+            <div class="row message-box">
+                <div class="col s12">
+                    <div class="card grey lighten-4">
+                        <div class="card-content">
+                            <i class="material-icons">info</i>                            
+                            {% for message in messages %}
+                            <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% endif %}
             {% endwith %}
             {% block content %}{% endblock %}
