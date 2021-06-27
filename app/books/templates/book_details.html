@@ -4,7 +4,7 @@
 <p class="page-heading">{{ book.title }}</p>
 <p class="section-heading">Details</p>
 
-<div class="row">
+<div class="row details-section">
     <div class="col s4">
         <span class="field-label">Authors</span>
         <p>{{ book.authors }}</p>
@@ -25,11 +25,15 @@
             {% endif %}
         </p>
     </div>
-<div class="row">
+</div>
+<div class="divider"></div>
+<div class="row details-section">
     <div class="col s6">
         <span class="field-label">Next steps</span>
         {% if book.next_steps %}
         <p>{{ book.next_steps }}</p>
+        {% else %}
+        <span></span>
         {% endif %}
     </div>
     <div class="col s6">
@@ -39,7 +43,8 @@
         {% endif %}
     </div>
 </div>
-<div class="row">
+<div class="divider"></div>
+<div class="row details-section">
     <div class="col s12">
         <span class="field-label">Notes</span>
         {% if book.notes %}
@@ -47,13 +52,16 @@
         {% endif %}
     </div>
 </div>
+<div class="divider"></div>
 
 <p class="section-heading">Tags</p>
-{% for tag in book.tags %}
-<div class="chip">
-    <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>
-</div>
-{% endfor %}
+<p>
+    {% for tag in book.tags %}
+    <div class="chip">
+        <a href="{{ url_for('view_by_tag', tag_id = tag.id) }}">{{ tag.name }}</a>
+    </div>
+    {% endfor %}
+</p>
 <div class="divider"></div>
 <div class="section">
     <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('books.edit', id = book.id) }}">
