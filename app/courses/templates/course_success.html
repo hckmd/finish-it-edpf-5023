@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Success!</h1>
+<div class="section">
+    <p class="page-heading">Success!</p>
+    <p>The course <i>{{ course_title }}</i> was added successfully.</p>
+</div>
+<div class="divider"></div>
+<a href="{{ url_for('courses.index') }}">Return to list of courses.</a>
 
-<p>The course <i>{{ course_title }}</i> was added successfully.</p>
 
 {% endblock %}
