@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Deleted course</h1>
-<p>Successfully deleted <i>{{ course_title }}</i></p>
-<hr>
+<div class="section">
+    <p class="page-heading">Deleted course</p>
+    <p>Successfully deleted <i>{{ course_title }}</i></p>
+</div>
+<div class="divider"></div>
 <a href="{{ url_for('courses.index') }}">Back to courses list</a>
 {% endblock %}
