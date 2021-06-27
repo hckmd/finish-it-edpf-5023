@@ -2,38 +2,46 @@
 {% set active_menu_item = 'Users' %}
 
 {% block content %}
-    <h1>Users</h1>
-    <table>
-        <thead>
+    <div class="row">
+        <p class="page-heading">Users</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for user in users %}
             <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Admin</th>
-                <th></th>
+                <td>
+                    <a href="{{ url_for('admin.edit_user', id = user.id) }}">{{ user.username }}</a>
+                </td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.is_administrator %}
+                    <i class="material-icons small">check</i>
+                    {% endif %}
+                </td>
+                <td>
+                    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('admin.change_password', user_id = user.id) }}">
+                        Change password
+                    </a>
+                    <a class="waves-effect waves-light btn red lighten-2" href="{{ url_for('admin.delete_user', id = user.id) }}">
+                        Delete
+                    </a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-        {% for user in users %}
-        <tr>
-            <td>
-                <a href="{{ url_for('admin.edit_user', id = user.id) }}">{{ user.username }}</a>
-            </td>
-            <td>{{ user.email }}</td>
-            <td>
-                {% if user.is_administrator %}
-                Yes 
-                {% else %}
-                No
-                {% endif %}
-            </td>
-            <td><a href="{{ url_for('admin.change_password', user_id = user.id) }}">Change password</a></td>
-            <td>
-                <a href="{{ url_for('admin.delete_user', id = user.id) }}">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-    <a href="{{ url_for('admin.add_user') }}">Add user</a>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <a class="waves-effect waves-light btn green lighten-1" href="{{ url_for('admin.add_user') }}">
+            <i class="material-icons left">add</i>Add user
+        </a>
+    </div>
 {% endblock %}
 
