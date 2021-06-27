@@ -4,19 +4,23 @@
 {% block content %}
 <p class="page-heading">View by tags</p>
 <form action="" method="get">
-    <div class="input-field">
-        <select id="filter_tag" name="tag_id">
-            <option value="-">-</option>
-            {% for tag in all_tags %}
-            <option value="{{ tag.id }}" {% if tag.id == selected_tag_id %} selected {% endif %}>
-                {{ tag.name }}
-            </option>
-            {% endfor %}
-        </select>
-        <label for="filter_tag">Select tag</label>
+    <div class="row">
+        <div class="input-field col s12">
+            <select id="filter_tag" name="tag_id">
+                <option value="-">-</option>
+                {% for tag in all_tags %}
+                <option value="{{ tag.id }}" {% if tag.id == selected_tag_id %} selected {% endif %}>
+                    {{ tag.name }}
+                </option>
+                {% endfor %}
+            </select>
+            <label for="filter_tag">Select tag</label>
+        </div>
     </div>
-    <button class="waves-effect waves-light btn blue darken-2" type="submit">Filter by tag</button>
-    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('view_by_tag')}}">View all</a>
+    <div class="row">
+        <button class="waves-effect waves-light btn blue darken-2" type="submit">Filter by tag</button>
+        <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('view_by_tag')}}">View all</a>
+    </div>
 </form>
 
 {% for tag in selected_tags %}
