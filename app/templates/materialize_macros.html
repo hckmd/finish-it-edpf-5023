@@ -1,5 +1,10 @@
 {% macro materialize_text_input(field) %}
-    {{ field.label }}  
+    <label>
+        {{ field.label.text | safe }} 
+        {% if kwargs.required %}
+        *
+        {% endif %}
+    </label>
     {% if field.errors %}
         {% set css_class = 'validate invalid ' + kwargs.pop('class', '') %}
         {{ field(class=css_class, **kwargs) }}
@@ -13,7 +18,7 @@
 {% endmacro %}
 
 {% macro materialize_textarea(field) %}
-    {{ field.label }}  
+    {{ field.label }}
     {% if field.errors %}
         {% set css_class = 'materialize-textarea validate invalid ' + kwargs.pop('class', '') %}
         {{ field(class=css_class, **kwargs) }}
