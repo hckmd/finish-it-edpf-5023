@@ -53,13 +53,14 @@ def init_database():
     db.drop_all()
     db.create_all()
 
-    # Create a sample (non-admin) user with email and password settings from .env
-    dan_user = models.User (username='dan')
-    dan_email = os.environ.get('dan_email')
-    dan_user.email = dan_email
-    dan_password = os.environ.get('dan_password')
-    dan_user.set_password(dan_password)
-    dan_user.is_administrator = False
+    # Create a sample (non-admin) user with email and password settings from environment variables
+    person_username = os.environ.get('person_username')
+    person_user = models.User (username = person_username)
+    person_email = os.environ.get('person_email')
+    person_user.email = person_email
+    person_password = os.environ.get('person_password')
+    person_user.set_password(person_password)
+    person_user.is_administrator = False
 
     # Create a sample admin user as well
     admin_user = models.User (username='admin')
@@ -80,9 +81,9 @@ def init_database():
     db.session.add(admin_tag)
 
     # Add tags to the sample non-admin user
-    dan_user.tags.append(research_tag)
-    dan_user.tags.append(career_tag)
-    dan_user.tags.append(teaching_tag)
+    person_user.tags.append(research_tag)
+    person_user.tags.append(career_tag)
+    person_user.tags.append(teaching_tag)
 
     # Add tag to the sample admin user
     admin_user.tags.append(admin_tag)
@@ -134,10 +135,10 @@ def init_database():
     db.session.add(book3)
 
     # Add the items (books and courses) to the example user
-    dan_user.items.append(book1)
-    dan_user.items.append(book2)
-    dan_user.items.append(course1)
-    db.session.add(dan_user)
+    person_user.items.append(book1)
+    person_user.items.append(book2)
+    person_user.items.append(course1)
+    db.session.add(person_user)
 
     # Add the admin user and their items to the session
     admin_user.items.append(book3)
@@ -145,4 +146,6 @@ def init_database():
     db.session.add(admin_user)
 
     db.session.commit()
+
+    print('Database was initalised successfully.')
 
