@@ -14,6 +14,9 @@
 <li {% if active_menu_item == 'Tags' %} class="active" {% endif %}>
     <a href="{{ url_for('tags.index') }}">Tags</a>
 </li>
+<li {% if active_menu_item == 'Reports' %} class="active" {% endif %}>
+    <a href="{{ url_for('reports.index') }}">Reports</a>
+</li>
 {% endif %}
 {% if user.is_administrator %}
 <li {% if active_menu_item == 'Users' %} class="active" {% endif %}>
