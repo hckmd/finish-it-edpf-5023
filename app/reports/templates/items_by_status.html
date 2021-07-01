@@ -10,7 +10,9 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/plotly-1.58.4.min.js') }}"></script>
 <script type="text/javascript">
-  var graphs = {{ graphJSON | safe }};
-  Plotly.plot('chart', graphs, {});
+    $.get("{{ url_for('reports.item_status_data') }}", function(response) {
+        var graph = JSON.parse(response);
+        Plotly.newPlot('chart', graph, {});
+    });
 </script>
 {% endblock %}
