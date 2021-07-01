@@ -3,4 +3,8 @@
 
 {% block content %}
 <p class="page-heading">Reports</p>
+<p class="section-heading">User reports</p>
+<ul>
+    <li><a href="{{ url_for('reports.item_status') }}">Items by status</a></li>
+</ul>
 {% endblock %}

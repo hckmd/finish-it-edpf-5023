@@ -61,5 +61,6 @@
         <script src="{{ url_for('static', filename='js/jquery-2.1.1.min.js') }}"></script>
         <script src="{{ url_for('static', filename='js/materialize.js') }}"></script>
         <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+        {% block scripts %}{% endblock %}
     </body>
 </html>
