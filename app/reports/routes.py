@@ -51,6 +51,12 @@ def item_status_data():
     graphJSON = json.dumps(figure, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
+@bp.get('/user_type')
+@admin_required
+@login_required
+def user_type_view():
+    return render_template('users_by_type.html', title = 'Users by Type')
+
 @bp.get('/user_type_data')
 @admin_required
 @login_required
@@ -62,7 +68,7 @@ def user_type_data():
     # Convert the result to a list of dictionaries, for use for plotly plot's data source
     user_type_data = [dict(result) for result in user_type_data]
 
-    # Change the values of the type from False or True to more clear value
+    # Change the values of the type from False or True to more clearly labelled value
     for row in user_type_data:
         if row['type'] == False:
             row['type'] = 'Normal user'
@@ -78,9 +84,4 @@ def user_type_data():
     graphJSON = json.dumps(figure, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
-@bp.get('/user_type')
-@admin_required
-@login_required
-def user_type_view():
-    return render_template('users_by_type.html', title = 'Users by Type')
 
