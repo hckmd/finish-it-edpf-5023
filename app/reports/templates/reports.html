@@ -7,4 +7,10 @@
 <ul>
     <li><a href="{{ url_for('reports.item_status_view') }}">Items by status</a></li>
 </ul>
+{% if current_user.is_administrator %}
+<p class="section-heading">Admin reports</p>
+<ul>
+    <li><a href="{{ url_for('reports.user_type_view') }}">Users by type</a></li>
+</ul>
+{% endif %}
 {% endblock %}

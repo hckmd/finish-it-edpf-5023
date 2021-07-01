@@ -2,7 +2,7 @@
 {% set active_menu_item = 'Reports' %}
 
 {% block content %}
-<p class="page-heading">Items by Status</p>
+<p class="page-heading">Users by Type</p>
 <div id="chart" class="chart"></div>
 
 {% endblock %}
@@ -10,7 +10,7 @@
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/plotly-1.58.4.min.js') }}"></script>
 <script type="text/javascript">
-  $.get("{{ url_for('reports.item_status_data') }}", function(response) {
+  $.get("{{ url_for('reports.user_type_data') }}", function(response) {
     var graph = JSON.parse(response);
     Plotly.newPlot('chart', graph, {});
   });
