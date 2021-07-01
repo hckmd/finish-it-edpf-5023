@@ -27,7 +27,10 @@ def item_status():
     item_status_data = [dict(result) for result in item_status_data]
 
     # Creates a figure with plotly express using the item status data
-    figure = px.bar(item_status_data, x = 'status', y = 'count', color = 'type', barmode = 'group')
+    figure = px.bar(item_status_data, 
+        x = 'status', y = 'count', color = 'type', barmode = 'group',
+        labels = {'status': 'Status', 'count': 'Number of items', 'type': 'Type'}
+    )
     # Converts data from plotly express to JSON for the client side
     graphJSON = json.dumps(figure, cls = plotly.utils.PlotlyJSONEncoder)
 
