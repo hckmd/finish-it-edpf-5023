@@ -6,6 +6,7 @@
 <p class="section-heading">User reports</p>
 <ul>
     <li><a href="{{ url_for('reports.item_status_view') }}">Items by status</a></li>
+    <li><a href="{{ url_for('reports.tag_items_view') }}">Items per Tag</a></li>
 </ul>
 {% if current_user.is_administrator %}
 <p class="section-heading">Admin reports</p>

@@ -16,6 +16,7 @@ app.config['SECRET_KEY'] = 'this-is-a-secret' # Not for use in production, just 
 db = SQLAlchemy(app)
 STATUS_OPTIONS = ['Not Started', 'Started', 'Completed', 'On Hold']
 PRIORITY_OPTIONS = ['Low', 'Medium', 'High']
+ITEM_TYPES = ['book', 'course']
 
 # Set up flask-login for user authentication
 login = LoginManager(app)

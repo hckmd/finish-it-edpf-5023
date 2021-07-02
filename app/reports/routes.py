@@ -6,9 +6,9 @@ import plotly
 import plotly.express as px
 from sqlalchemy import func
 
-from app import db, STATUS_OPTIONS
+from app import db, STATUS_OPTIONS, ITEM_TYPES
 from app.reports import bp
-from app.models import Item, User
+from app.models import Item, User, Tag
 from app.admin.decorators import admin_required
 
 @bp.route('/')
@@ -84,4 +84,26 @@ def user_type_data():
     graphJSON = json.dumps(figure, cls = plotly.utils.PlotlyJSONEncoder)
     return graphJSON
 
+@bp.get('/tag_items')
+@login_required
+def tag_items_view():
+    return render_template('tag_items.html', title = 'Number of Items per Tag')
 
+@bp.get('/tag_items_data')
+@login_required
+def tag_items_data():
+    tag_items = []
+    
+    tags = Tag.query.filter_by(user_id = current_user.id)  
+    for tag in tags:
+        for item_type in ITEM_TYPES:
+            number_of_items = len([item for item in tag.items if item.type == item_type])
+            tag_data = { 'Tag': tag.name, 'Item Type': item_type, 'Number of items': number_of_items }
+            tag_items.append(tag_data)
+
+    # Creates a figure with plotly express using the tag and items data
+    figure = px.bar(tag_items, x = 'Tag', y = 'Number of items', color = 'Item Type', barmode = 'group')
+    
+    # Converts data from plotly express to JSON for the client side
+    graphJSON = json.dumps(figure, cls = plotly.utils.PlotlyJSONEncoder)
+    return graphJSON
