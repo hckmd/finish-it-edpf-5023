@@ -4,14 +4,50 @@
 {% block content %}
 <p class="page-heading">Reports</p>
 <p class="section-heading">User reports</p>
-<ul>
-    <li><a href="{{ url_for('reports.item_status_view') }}">Items by status</a></li>
-    <li><a href="{{ url_for('reports.tag_items_view') }}">Items per Tag</a></li>
-</ul>
+<div class="row">
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Items by Status</span>
+                <p>This report displays a summary of the courses and books you have not started, started, completed and have put on hold.</p>
+            </div>
+            <div class="card-action">
+                <a class="blue-text" href="{{ url_for('reports.item_status_view') }}">
+                    View Report
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m4">
+        <div class="card">  
+            <div class="card-content">
+                <span class="card-title">Items per Tag</span>
+                <p>This report displays the number of courses and books per each of your Tags.</p>
+            </div>
+            <div class="card-action">
+                <a class="blue-text" href="{{ url_for('reports.tag_items_view') }}">
+                    View Report
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 {% if current_user.is_administrator %}
 <p class="section-heading">Admin reports</p>
-<ul>
-    <li><a href="{{ url_for('reports.user_type_view') }}">Users by type</a></li>
-</ul>
+<div class="row">
+    <div class="col s12 m4">
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Users by Type</span>
+                <p>This report displays a summary of the users by their type (Normal and Admin).</p>
+            </div>
+            <div class="card-action">
+                <a class="blue-text" href="{{ url_for('reports.user_type_view') }}">
+                    View Report
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %}
 {% endblock %}
