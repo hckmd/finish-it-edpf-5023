@@ -3,9 +3,7 @@
 
 {% block content %}
 <p class="page-heading">Stuff to finish</p>
-<a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('export_items') }}">
-    <i class="material-icons left">file_download</i> Export items
-</a>
+
 <table class="highlight">
     <thead>
         <tr>
@@ -55,5 +53,25 @@
         {% endfor %}
     </tbody>
 </table>
+<p>
+    <a class="waves-effect waves-light btn blue darken-2" href="{{ url_for('export_items') }}">
+        <i class="material-icons left">file_download</i> Export items
+    </a>
+</p>
+<div class="section import-items-section">
+    <div class="row">
+        <div class="col s12">
+            <p class="section-heading">Import items</h2>
+            <form action="{{ url_for('import_items') }}" method="POST" enctype="multipart/form-data">
+                <p>
+                    <input type="file" name="file"/>
+                    <button class="waves-effect waves-light btn green lighten-1" type="submit">
+                        <i class="material-icons left">file_upload</i> Upload
+                    </button>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}
 

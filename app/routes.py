@@ -5,7 +5,7 @@ from flask_login import current_user, login_required
 
 from app import app
 from app.models import Item, Tag
-from app.utils import export_user_items
+from app.utils import export_user_items, import_user_items
 
 @app.errorhandler(401)
 def unauthorised(e):
@@ -49,3 +49,38 @@ def export_items():
     export = export_user_items(items)
     return Response(json.dumps(export), mimetype='application/json', 
         headers={'Content-Disposition':'attachment;filename=items.json'})
+
+def allowed_file(filename):
+    # Code adapted from https://flask.palletsprojects.com/en/2.0.x/patterns/fileuploads/
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() == "json"
+
+@app.post('/import_items')
+@login_required
+def import_items():
+
+    # Check that the user has chosen a file to upload
+    if 'file' not in request.files:
+        flash('No file was chosen to export.', 'error')
+        return redirect(url_for('index'))
+    file = request.files['file']
+    if file.filename == '':
+        flash('No selected file.', 'error')
+        return redirect(url_for('index'))
+
+    # Check that the file is of a type that can be imported
+    if file and not allowed_file(file.filename):
+        flash('Uploaded file should be a .json file', 'error')
+        return redirect(url_for('index'))
+    
+    # Process the file to import the items for the current user
+    import_result = import_user_items(file, current_user.id)
+    if import_result.success:
+        imported_message = f'{import_result.imported} items were imported.'
+        flash(imported_message, 'info')
+    else:
+        for message in import_result.messages:
+            flash(message, 'error')
+
+    return redirect(url_for('index'))
+
