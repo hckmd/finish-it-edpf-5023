@@ -1,8 +1,11 @@
-from flask import render_template, request, url_for, flash, redirect
+import json
+
+from flask import render_template, request, url_for, flash, redirect, Response
 from flask_login import current_user, login_required
 
 from app import app
 from app.models import Item, Tag
+from app.utils import export_user_items
 
 @app.errorhandler(401)
 def unauthorised(e):
@@ -39,3 +42,10 @@ def view_by_tag():
         title = 'View by tag', all_tags = all_tags, selected_tags = selected_tags, selected_tag_id = selected_tag_id
     )
 
+@app.get('/export_items')
+@login_required
+def export_items():
+    items = Item.query.filter_by(user_id = current_user.id)
+    export = export_user_items(items)
+    return Response(json.dumps(export), mimetype='application/json', 
+        headers={'Content-Disposition':'attachment;filename=items.json'})

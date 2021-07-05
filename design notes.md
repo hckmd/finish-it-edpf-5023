@@ -17,6 +17,8 @@ For example, I could create a tag for *Statistics*, which I'd tag the courses an
 I want to be able to tag the items with multiple tags. For example, a book about Statistics with Python could be tagged with both *Statistics* and *Python*.
 The app will allow me to select a tag from a list of tags in the app and see all the books and courses with that tag. 
 
+I will also be able to import and export plain-text JSON files that contain the items and tags when logged in.
+
 ### Assumptions
 
 Some assumptions and items that are out of scope are discussed below.
